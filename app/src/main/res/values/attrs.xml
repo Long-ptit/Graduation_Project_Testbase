@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ToolbarApp" >
+
+        <attr name="tb_title"  format="string" />
+
+    </declare-styleable>
+
+</resources>
