@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.testbase.databinding.LayoutItemProductBinding
 import com.example.testbase.model.Product
 import com.example.testbase.ui.detail_product.DetailProductActivity
+import com.example.testbase.ui_seller.edit_product.EditProductActivity
 import com.example.testbase.util.Const
 import javax.inject.Inject
 
 class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHomeAdapter.ViewHolder>() {
-    var listProduct: MutableList<Product> = mutableListOf()
-    fun setData(listTable: MutableList<Product>) {
+    var listProduct: ArrayList<Product> = arrayListOf()
+    fun setData(listTable: ArrayList<Product>) {
         this.listProduct = listTable
         notifyDataSetChanged()
     }
@@ -23,10 +24,11 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
         fun fillData(data: Product, position: Int){
 
             Log.d("ptit", "fillData: " + data.id)
+            binding.tvNameProduct.text = data.name
             itemView.setOnClickListener {
                 var intent =  Intent(
                     binding.root.context,
-                    DetailProductActivity::class.java
+                    EditProductActivity::class.java
                 )
                 intent.putExtra(Const.PRODUCT_ID, data.id)
                 binding.root.context.startActivity(intent)
@@ -52,6 +54,5 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
     override fun getItemCount(): Int {
         return listProduct.size
     }
-
 
 }

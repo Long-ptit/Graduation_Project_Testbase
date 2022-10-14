@@ -36,6 +36,16 @@ abstract class BaseFragment<VM: BaseViewModel, BINDING: ViewDataBinding> : Fragm
         observerLiveData()
     }
 
+    fun showLoading() {
+        activity?.let { loadingDialog.show(it.supportFragmentManager, null) }
+    }
+
+    fun hideLoading() {
+        loadingDialog.dismiss()
+    }
+
+
+
     abstract fun getContentLayout(): Int
 
     abstract fun initViewModel()

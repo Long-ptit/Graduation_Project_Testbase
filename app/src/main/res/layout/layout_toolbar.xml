@@ -23,17 +23,24 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorWhite">
 
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_title" />
+
 
                 <TextView
                     android:id="@+id/tv_title"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="1"
                     android:elevation="@dimen/dp8"
                     android:fontFamily="@font/bevietnampro_bold"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:textColor="@color/color_0C1A30"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -7,6 +7,11 @@
         android:title="@string/menu_home" />
 
     <item
+        android:id="@+id/chatsFragment"
+        android:icon="@drawable/selector_user"
+        android:title="Chats" />
+
+    <item
         android:id="@+id/orderSellerFragment"
         android:icon="@drawable/selector_statistic"
 

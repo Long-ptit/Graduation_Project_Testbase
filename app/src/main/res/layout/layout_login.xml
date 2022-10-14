@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,6 +41,7 @@
                 android:background="@drawable/bg_text_input"
                 android:drawableLeft="@drawable/ic_email"
                 android:drawablePadding="10dp"
+                android:inputType="textEmailAddress"
                 android:gravity="center_vertical"
                 android:hint="@string/hint_email"
                 android:padding="10dp"
@@ -49,6 +51,7 @@
             <EditText
                 android:id="@+id/edt_password"
                 android:layout_width="match_parent"
+                android:inputType="textPassword"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_text_input"
@@ -57,6 +60,7 @@
                 android:gravity="center_vertical"
                 android:hint="@string/hint_password"
                 android:padding="10dp"
+                android:drawableRight="@drawable/ic_invisible"
                 android:textColorHint="@color/color_hint"
                 android:textSize="12sp" />
 

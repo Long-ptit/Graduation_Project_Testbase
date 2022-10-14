@@ -71,4 +71,14 @@
         <item name="android:background" >@drawable/bg_btn_login</item>
     </style>
 
+    <style name="Circle_Image" >
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Circle_Image_Product" >
+        <item name="cornerSize">50%</item>
+        <item name="strokeColor" >@color/colorBlack</item>
+        <item name="strokeWidth">@dimen/dp1</item>
+    </style>
+
 </resources>

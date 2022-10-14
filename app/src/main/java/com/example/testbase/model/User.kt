@@ -2,13 +2,14 @@ package com.example.testbase.model
 
 import java.io.Serializable
 
-data class User  (
+open class User(
 
-     val id: String,
-     val name: String,
-     val address: String,
-     val email: String,
-     val phone: String,
-     val uid: String
+    var id: String = "",
+    var name: String = "",
+    var address: String = "",
+    var email: String = "",
+    var phone: String = "",
+    var userType: Int = 0,
+    var path: String = "",
 
-) : Serializable
+    ) : Serializable

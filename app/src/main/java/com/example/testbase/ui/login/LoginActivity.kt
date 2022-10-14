@@ -6,14 +6,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.LayoutLoginBinding
+import com.example.testbase.model.Seller
+import com.example.testbase.model.User
+import com.example.testbase.ui.main.MainActivity
+import com.example.testbase.ui.main.MainSellerActivity
 import com.example.testbase.ui.sign_up.SignUpCustomerActivity
+import com.example.testbase.util.Const
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<LoginViewModel, LayoutLoginBinding>() {
 
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = Firebase.auth
     lateinit var adapter: TestAdapter
     override fun getContentLayout(): Int {
        return R.layout.layout_login
@@ -24,41 +32,36 @@ class LoginActivity : BaseActivity<LoginViewModel, LayoutLoginBinding>() {
     }
 
     override fun initView() {
-        val listData = mutableListOf("1", "2", "3")
-        adapter = TestAdapter(listData)
-        auth = Firebase.auth
-
-        login()
-
-
 
     }
 
 
-    private fun login() {
-        auth.signInWithEmailAndPassword("haha123@gmail.com", "qwertyu")
+    private fun login(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("ptit", "signInWithEmail:success")
+                    //startActivity(Intent(this@LoginActivity, MainSellerActivity::class.java))
+                    viewModel.checkType(auth.uid.toString())
+                    showErrorStr("Hi ${auth.currentUser?.email}")
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("ptit", "signInWithEmail:failure", task.exception)
+                    showErrorStr(task.exception?.message.toString())
                 }
             }
     }
     override fun initListener() {
         binding.tvSignUp.setOnClickListener {
-            Log.d("ptit", "kakaka")
-//            val currentUser = auth.currentUser
-//            if(currentUser != null){
-//                showError(R.string.app_name)
-//            }
             val intent = Intent(this@LoginActivity, SignUpCustomerActivity::class.java)
             startActivity(intent)
-            //viewModel.callApi()
-
         }
+
+        binding.btnLogin.setOnClickListener {
+            login(
+                email = binding.edtEmail.text.toString(),
+                password = binding.edtPassword.text.toString()
+            )
+        }
+
 
 
 
@@ -66,8 +69,11 @@ class LoginActivity : BaseActivity<LoginViewModel, LayoutLoginBinding>() {
 
 
     override fun observerLiveData() {
-        viewModel.test.observe(this@LoginActivity, {
-            Log.d("ptit", "observerLiveData: " + it)
-        })
+        viewModel.stateTypeLogin.observe(this) {
+            when (it) {
+                Const.USER -> startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                Const.SELLER -> startActivity(Intent(this@LoginActivity, MainSellerActivity::class.java))
+            }
+        }
     }
 }

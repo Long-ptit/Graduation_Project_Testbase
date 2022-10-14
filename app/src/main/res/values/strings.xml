@@ -37,4 +37,16 @@
     <string name="price">Price</string>
     <string name="quantity">Quantity</string>
     <string name="str_save">Lưu</string>
+    <string name="str_name">Họ và tên</string>
+    <string name="str_age">Tuổi</string>
+    <string name="str_address">Địa chỉ</string>
+    <string name="str_phone">Số điện thoại</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Mật khẩu</string>
+    <string name="str_confirm_password">Nhập lại mật khẩu</string>
+    <string name="chat_ngay">Chat ngay</string>
+    <string name="th_m_v_o_gi_h_ng">Thêm vào giỏ hàng</string>
+
+    <string name="str_vnd">VND</string>
+
 </resources>

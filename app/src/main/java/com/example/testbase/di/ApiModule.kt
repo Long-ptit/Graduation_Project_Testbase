@@ -1,6 +1,8 @@
 package com.example.testbase.di
 
 import com.example.testbase.network.Api
+import com.example.testbase.service.ApiFcm
+import com.example.testbase.util.Const
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +35,7 @@ object ApiModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:8080")
+            .baseUrl(Const.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -45,5 +47,16 @@ object ApiModule {
         return retrofit.create(Api::class.java)
     }
 
+
+    @Provides
+    @Singleton
+    fun provideRetrofitApiFcm(client: OkHttpClient): ApiFcm {
+        return Retrofit.Builder()
+            .baseUrl(Const.BASE_URL_FCM)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+            .create(ApiFcm::class.java)
+    }
 
 }

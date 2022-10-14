@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui_seller.add_product.AddProductActivity">
@@ -15,64 +15,78 @@
             android:layout_alignParentTop="true"
             app:tb_title="Thêm sản phẩm" />
 
-        <LinearLayout
-            android:id="@+id/layout_edt"
-            android:layout_below="@id/toolbar"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="18dp"
-            android:layout_marginTop="40dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_above="@id/btn_save"
+            android:layout_below="@id/toolbar">
 
-            <ImageView
-                android:id="@+id/img"
+            <LinearLayout
+                android:id="@+id/layout_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/dp14"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_bg_add_image" />
+                android:layout_marginHorizontal="18dp"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edt_name"
-                style="@style/Background_Edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:drawableLeft="@drawable/ic_email"
-                android:gravity="center_vertical"
-                android:hint="@string/name_product" />
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp14"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_bg_add_image" />
 
-            <EditText
-                android:id="@+id/edt_description"
-                style="@style/Background_Edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:drawableLeft="@drawable/ic_email"
-                android:gravity="center_vertical"
-                android:hint="@string/description" />
+                <EditText
+                    android:id="@+id/edt_name"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/name_product" />
 
-            <EditText
-                android:id="@+id/edt_quantity"
-                style="@style/Background_Edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:drawableLeft="@drawable/ic_email"
-                android:gravity="center_vertical"
-                android:hint="@string/quantity" />
+                <EditText
+                    android:id="@+id/edt_description"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/description" />
 
-            <EditText
-                android:id="@+id/edt_price"
-                style="@style/Background_Edt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:drawableLeft="@drawable/ic_email"
-                android:gravity="center_vertical"
-                android:hint="@string/price" />
+                <EditText
+                    android:id="@+id/edt_quantity"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/quantity" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edt_price"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/price" />
+
+                <Spinner
+                    android:id="@+id/sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:background="@color/transparent"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_save"

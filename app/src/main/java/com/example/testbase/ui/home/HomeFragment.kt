@@ -8,6 +8,7 @@ import com.example.testbase.adapter.ProductHomeAdapter
 import com.example.testbase.base.BaseFragment
 import com.example.testbase.databinding.FragmentHomeBinding
 import com.example.testbase.model.Product
+import com.example.testbase.ui.home.adapter.ProductUserHomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     @Inject
-    lateinit var mAdapter: ProductHomeAdapter
+    lateinit var mAdapter: ProductUserHomeAdapter
 
 
     override fun getContentLayout(): Int {
@@ -35,16 +36,16 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         )
         binding.rcv.layoutManager = layoutManager
         binding.rcv.adapter = mAdapter
-        mAdapter.setData(getFakeData())
+        viewModel.getAllProduct()
     }
 
     private fun getFakeData(): MutableList<Product> {
         val list = mutableListOf<Product>()
-        list.add(Product("One"))
-        list.add(Product("Two"))
-        list.add(Product("Three"))
-        list.add(Product("Four"))
-        list.add(Product("Five"))
+//        list.add(Product("One"))
+//        list.add(Product("Two"))
+//        list.add(Product("Three"))
+//        list.add(Product("Four"))
+//        list.add(Product("Five"))
 
 
         return list;
@@ -55,7 +56,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun observerLiveData() {
-
+        viewModel.stateListAllProduct.observe(viewLifecycleOwner) {
+            mAdapter.setData(it as ArrayList<Product>)
+        }
     }
 
 

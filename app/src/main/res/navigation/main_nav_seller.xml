@@ -20,4 +20,8 @@
         android:id="@+id/orderSellerFragment"
         android:name="com.example.testbase.ui_seller.order.OrderSellerFragment"
         android:label="OrderSellerFragment" />
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="com.example.testbase.ui_common.chats.ChatsFragment"
+        android:label="ChatsFragment" />
 </navigation>

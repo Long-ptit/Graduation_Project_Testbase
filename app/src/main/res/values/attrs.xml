@@ -7,4 +7,10 @@
 
     </declare-styleable>
 
+    <declare-styleable name="ButtonApp" >
+
+        <attr name="btn_title"  format="string" />
+
+    </declare-styleable>
+
 </resources>

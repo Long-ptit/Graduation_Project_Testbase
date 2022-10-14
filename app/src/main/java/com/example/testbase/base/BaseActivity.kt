@@ -1,6 +1,7 @@
 package com.example.testbase.base
 
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,8 +26,6 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
         initView()
         initListener()
         observerLiveData()
-//        errorDialog.show(supportFragmentManager, null)
-        showError(R.string.app_name)
 
     }
 
@@ -51,6 +50,13 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
 
     protected fun showError(@StringRes id: Int) {
         var errorSnackbar = Snackbar.make(binding.root, id, Snackbar.LENGTH_LONG)
+        errorSnackbar.setAction("", null)
+        errorSnackbar.show()
+    }
+
+    protected fun showErrorStr(string: String) {
+        Log.d(TAG, "showErrorStr: ")
+        var errorSnackbar = Snackbar.make(binding.root, string, Snackbar.LENGTH_LONG)
         errorSnackbar.setAction("", null)
         errorSnackbar.show()
     }

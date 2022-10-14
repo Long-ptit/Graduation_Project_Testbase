@@ -10,7 +10,7 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun showLoading() {
         isLoading.value = true
-        errorMessage.value = null
+       // errorMessage.value = null
     }
 
     protected fun hideLoading() {
