@@ -6,7 +6,7 @@ import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.User
 import com.example.testbase.network.Api
 import com.example.testbase.util.Const
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,19 +27,19 @@ class LoginViewModel @Inject constructor(val api: Api) : BaseViewModel() {
     val stateUser = MutableLiveData<User>()
     val stateTypeLogin = MutableLiveData<String>()
 
-    fun getUserInfo(id: String) {
-        api.getUserInfor(id).enqueue(object : Callback<BaseResponse?> {
-            override fun onResponse(call: Call<BaseResponse?>, response: Response<BaseResponse?>) {
-                val user = response.body()?.data as User
-                Log.d("ptit", "onResponse: ${user.name}")
-            }
-
-            override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-
-    }
+//    fun getUserInfo(id: String) {
+//        api.getUserInfor(id).enqueue(object : Callback<BaseResponse?> {
+//            override fun onResponse(call: Call<BaseResponse?>, response: Response<BaseResponse?>) {
+//                val user = response.body()?.data as User
+//                Log.d("ptit", "onResponse: ${user.name}")
+//            }
+//
+//            override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
+//                TODO("Not yet implemented")
+//            }
+//        })
+//
+//    }
 
     fun checkType(id: String) {
         database

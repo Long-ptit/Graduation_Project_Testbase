@@ -6,8 +6,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.example.testbase.R
-import com.example.testbase.view_model.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCompatActivity(){
@@ -26,7 +24,6 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
         initView()
         initListener()
         observerLiveData()
-
     }
 
     private fun observerDefaultLiveData() {

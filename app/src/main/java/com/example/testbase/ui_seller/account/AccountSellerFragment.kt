@@ -11,8 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.testbase.R
 import com.example.testbase.base.BaseFragment
 import com.example.testbase.databinding.FragmentAccountSellerBinding
+import com.example.testbase.model.Seller
 import com.example.testbase.ui.login.LoginActivity
 import com.example.testbase.ui.login.LoginViewModel
+import com.example.testbase.util.FirebaseUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,17 +28,17 @@ class AccountSellerFragment : BaseFragment<AccountViewModel, FragmentAccountSell
     }
 
     override fun initView() {
-
+        viewModel.getSellerInfo(FirebaseUtil.getUid())
     }
 
     override fun initListener() {
 
         binding.btnLoggout.setOnClickListener {
-            Log.d("ptit", "click dang xuat: ")
             viewModel.loggout()
         }
 
-        binding.btnLoggout1.setOnClickListener {
+
+        binding.tvName.setOnClickListener {
             Log.d("ptit", "click dang xuat: ")
             viewModel.loggout()
             startActivity(Intent(context, LoginActivity::class.java))
@@ -44,7 +46,17 @@ class AccountSellerFragment : BaseFragment<AccountViewModel, FragmentAccountSell
     }
 
     override fun observerLiveData() {
+        viewModel.stateSeller.observe(viewLifecycleOwner) {
+            val seller = it.data
+            showData(seller)
+        }
 
+    }
+
+    private fun showData(seller: Seller) {
+        binding.tvName.text = seller.shopName
+        binding.tvPhone.text = seller.phone
+        binding.tvAddress.text = seller.address
     }
 
 }

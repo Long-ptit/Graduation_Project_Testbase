@@ -81,4 +81,11 @@
         <item name="strokeWidth">@dimen/dp1</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorGrayText</item>
+        <item name="colorControlActivated">@color/colorYellowDark</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1</item>
+    </style>
+
 </resources>

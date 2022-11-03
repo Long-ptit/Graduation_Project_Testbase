@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.example.testbase.view_model.BaseViewModel
 
 abstract class BaseFragment<VM: BaseViewModel, BINDING: ViewDataBinding> : Fragment() {
 

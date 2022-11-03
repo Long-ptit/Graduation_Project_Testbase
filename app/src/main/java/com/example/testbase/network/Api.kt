@@ -2,7 +2,7 @@ package com.example.testbase.network
 
 import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.*
-import com.example.testbase.model_response.CartItemResponse
+import com.example.testbase.model_response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -14,11 +14,23 @@ interface Api {
     val path: String
         get() = "api/v1/user"
 
-    @GET("api/v1/user/getUser/{id}")
-    fun getUserInfor(@Path("id") id: String): Call<BaseResponse>
+    @GET("api/v1/user/getInforUser/{id}")
+    fun getUserInfor(@Path("id") id: String): Call<UserResponse>
+
+    @GET("api/v1/user/getInforSeller/{id}")
+    fun getInforSeller(@Path("id") id: String): Call<SellerResponse>
 
     @POST("api/v1/user/saveUser")
     fun saveUser(@Body user: User): Call<BaseResponse>
+
+    @Multipart
+    @POST("api/v1/user/saveImage")
+    suspend fun saveImage(
+        @Part user_img: MultipartBody.Part,
+        @Part("user_id") user_id: RequestBody,
+    )
+            : ResponseObject
+
 
     @POST("api/v1/seller/saveSeller")
     fun saveSeller(@Body seller: Seller): Call<BaseResponse>
@@ -75,5 +87,31 @@ interface Api {
     @GET("api/v1/cart/deleteCartItem")
     suspend fun deleteCartItem(@Query("id") id: Int): BaseResponse
 
+    @POST("api/v1/order/createOrder")
+    suspend fun createOrder(@Body order: Order): OrderResponse
+
+    @GET("api/v1/order/getOrderByUser/{id}")
+    suspend fun getOrderByUser(@Path("id") id: String): ListOrderResponse
+
+    @GET("api/v1/order/getOrderById/{id}")
+    suspend fun getOrderById(@Path("id") id: Int): OrderResponse
+
+    @GET("api/v1/order/getOrderItemByOrder/{id}")
+    suspend fun getOrderItemByOrder(@Path("id") id: Int): ListOrderItemResponse
+
+    @GET("api/v1/order/getOrderByIdSeller/{id}")
+    suspend fun getOrderByIdSeller(@Path("id") idSeller: String): ListOrderResponse
+
+    @POST("api/v1/review/createReview")
+    suspend fun createReview(@Body review: Review): BaseResponse
+
+    @GET("api/v1/review/getRepresentReviewByProduct/{id}")
+    suspend fun getRepresentReviewByProduct(@Path("id") idProduct: Int): ListReviewResponse
+
+    @GET("api/v1/review/getStatisticReview/{id}")
+    suspend fun getStatisticReview(@Path("id") idProduct: Int): StatisReviewResponse
+
+    @GET("api/v1/review/getAllReviewById/{id}")
+    suspend fun getAllReviewById(@Path("id") idProduct: Int): ListReviewResponse
 
 }

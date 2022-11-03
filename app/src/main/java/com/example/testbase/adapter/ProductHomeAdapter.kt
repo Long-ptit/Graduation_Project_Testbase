@@ -33,6 +33,7 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
                 intent.putExtra(Const.PRODUCT_ID, data.id)
                 binding.root.context.startActivity(intent)
             }
+
         }
     }
 

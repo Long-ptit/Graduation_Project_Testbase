@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.ActivityConfirmOrderBinding
-import com.example.testbase.model.CartItem
+import com.example.testbase.model.*
+import com.example.testbase.model_firebase.NotificationSend
 import com.example.testbase.ui.cart.adapter.CartProductAdapter
+import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
 import com.example.testbase.ui.main.MainActivity
 import com.example.testbase.ui.main.MainSellerActivity
 import com.example.testbase.util.Const
@@ -24,7 +26,9 @@ import javax.inject.Inject
 class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirmOrderBinding>() {
 
     @Inject
-    lateinit var mAdapter: CartProductAdapter
+    lateinit var mAdapter: OrderProductAdapter
+    var order = Order()
+    var seller = Seller()
 
     override fun getContentLayout(): Int {
        return R.layout.activity_confirm_order
@@ -35,7 +39,6 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
     }
 
     override fun initView() {
-        NotificationUtil.sendNotification(this, "Acivity", "Activity")
 
         val layoutManager = LinearLayoutManager(
             this,
@@ -50,18 +53,41 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
 
 
 
-    @SuppressLint("SetTextI18n")
     override fun initListener() {
+        binding.btnSave.setOnClickListener {
+            handleSendItem()
+        }
+    }
+
+    private fun handleSendItem() {
+        order.description = binding.edtDescription.toString()
+        order.shippingInformation = ShippingInformation(
+            name = binding.edtName.text.toString(),
+            address = binding.edtAddress.text.toString(),
+            phone = binding.edtPhone.text.toString(),
+        )
+        order.description = binding.edtDescription.text.toString()
+        order.seller = seller
+        viewModel.createOrder(order)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun observerLiveData() {
         viewModel.stateCart.observe(this@ConfirmOrderActivity) {
             binding.tvTotalPrice.text = it.totalPrice.toString() + getString(R.string.str_vnd)
+            order.totalPrice = it.totalPrice
+            order.cart = it
         }
 
         viewModel.stateListAllProduct.observe(this@ConfirmOrderActivity) {
+            seller = it.get(0).product.seller
             mAdapter.setData(it as ArrayList<CartItem>)
         }
 
-//
-    }
-    override fun observerLiveData() {
+        viewModel.stateCreateOrder.observe(this@ConfirmOrderActivity) {
+//            FirebaseUtil.changeStatusOrder(it.data.id!!, Const.STATUS_ORDER_CONFIRM)
+            startActivity(Intent(this@ConfirmOrderActivity, MainActivity::class.java))
+            finishAffinity()
+        }
     }
 }

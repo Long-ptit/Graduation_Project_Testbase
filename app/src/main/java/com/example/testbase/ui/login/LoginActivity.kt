@@ -12,6 +12,7 @@ import com.example.testbase.ui.main.MainActivity
 import com.example.testbase.ui.main.MainSellerActivity
 import com.example.testbase.ui.sign_up.SignUpCustomerActivity
 import com.example.testbase.util.Const
+import com.example.testbase.util.FirebaseUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -42,6 +43,7 @@ class LoginActivity : BaseActivity<LoginViewModel, LayoutLoginBinding>() {
                 if (task.isSuccessful) {
                     //startActivity(Intent(this@LoginActivity, MainSellerActivity::class.java))
                     viewModel.checkType(auth.uid.toString())
+                    FirebaseUtil.saveToken()
                     showErrorStr("Hi ${auth.currentUser?.email}")
                 } else {
                     // If sign in fails, display a message to the user.

@@ -1,4 +1,4 @@
-package com.example.testbase.view_model
+package com.example.testbase.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,11 +22,5 @@ abstract class BaseViewModel : ViewModel() {
             errorMessage.value = R.string.app_name
         }
     }
-
-
-
-
-
-
 
 }

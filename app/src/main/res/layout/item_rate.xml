@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_item"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            app:shapeAppearanceOverlay="@style/Circle_Image"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp10"
+            android:src="@color/color_3669C9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/img_item"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_nanme_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp50"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Trịnh Xuân Long"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp20"
+                    android:text="10 giờ trước"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/sp12"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RatingBar
+                    android:id="@+id/myRatingBar"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:numStars="5"
+                    android:rating="3"
+                    android:theme="@style/RatingBar" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5"
+                android:fontFamily="@font/svn_gilroy_medium"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

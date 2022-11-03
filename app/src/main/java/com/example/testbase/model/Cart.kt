@@ -3,9 +3,9 @@ package com.example.testbase.model
 import java.io.Serializable
 
 data class Cart(
-    var id: Int,
-    var createAt: Long,
-    var totalPrice: Long,
-    var totalQuantity: Long,
-    var user: User
+    var id: Int? = null,
+    var createAt: Long = 0,
+    var totalPrice: Long = 0,
+    var totalQuantity: Long = 0,
+    var user: User = User()
 ): Serializable

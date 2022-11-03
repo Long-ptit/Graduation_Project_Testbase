@@ -1,19 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui_seller.account.AccountSellerFragment">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp10"
+        android:orientation="vertical"
+        tools:context=".ui.order.OrderFragment">
 
-            <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/btn_loggout1"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/img_user"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginRight="@dimen/dp15"
+                android:layout_marginBottom="@dimen/dp10"
+                android:scaleType="centerCrop"
+                android:src="@color/colorAccent"
+                app:shapeAppearanceOverlay="@style/Circle_Image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trịnh Xuân Long"
+                    android:textSize="@dimen/sp20"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0373443053"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tòa TTTM "
+                    android:textSize="@dimen/sp14" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/colorGrayText" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/img_1"
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_account_test" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_toRightOf="@id/img_1"
+                android:text="Cài đặt" />
+
+            <ImageView
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_next"
+                app:tint="@color/colorBlack" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/dp10">
+
+            <ImageView
+                android:id="@+id/img_2"
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_account_test" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_toRightOf="@id/img_2"
+                android:text="Thông tin chung" />
+
+            <ImageView
+                android:layout_width="@dimen/dp24"
+                android:layout_height="@dimen/dp24"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_next"
+                app:tint="@color/colorBlack" />
+
+
+        </RelativeLayout>
 
         <com.example.testbase.custom_view.ButtonApp
             android:id="@+id/btn_loggout"
@@ -23,6 +135,6 @@
             app:btn_title="Đăng xuất khỏi trái đất"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

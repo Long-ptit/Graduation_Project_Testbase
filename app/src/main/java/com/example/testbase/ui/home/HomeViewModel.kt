@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.testbase.model.Product
 import com.example.testbase.network.Api
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

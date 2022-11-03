@@ -1,60 +1,63 @@
 package com.example.testbase.ui_seller.order
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testbase.R
+import com.example.testbase.base.BaseFragment
+import com.example.testbase.databinding.FragmentOrderBinding
+import com.example.testbase.model.Order
+import com.example.testbase.ui.detail_order.DetailOrderActivity
+import com.example.testbase.ui.order.OrderViewModel
+import com.example.testbase.ui.order.adapter.OrderAdapter
+import com.example.testbase.ui_seller.detail_order_seller.DetailOrderSellerActivity
+import com.example.testbase.util.Const
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class OrderSellerFragment : BaseFragment<OrderSellerViewModel, FragmentOrderBinding>() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderSellerFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class OrderSellerFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    @Inject
+    lateinit var mAdapter: OrderAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun getContentLayout(): Int {
+        return R.layout.fragment_order
+    }
+
+    override fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(OrderSellerViewModel::class.java)
+    }
+
+    override fun initView() {
+        val layoutManager = LinearLayoutManager(
+            activity,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.rcv.layoutManager = layoutManager
+        binding.rcv.adapter = mAdapter
+        viewModel.getOrderByIdSeller()
+    }
+
+    override fun initListener() {
+        mAdapter.itemClickListener = { id ->
+            val intent = Intent(activity, DetailOrderSellerActivity::class.java)
+            intent.putExtra(Const.ORDER_ID, id)
+            activity?.startActivity(intent)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_seller, container, false)
+    override fun observerLiveData() {
+        viewModel.stateListOrder.observe(viewLifecycleOwner) {
+            mAdapter.setData(it.data as ArrayList<Order>)
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderSellerFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrderSellerFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
+

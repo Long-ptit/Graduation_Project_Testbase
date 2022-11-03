@@ -30,8 +30,13 @@ class OrderProductAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun fillData(data: CartItem, position: Int) {
-
+            Glide
+                .with(binding.root.context)
+                .load(Const.BASE_URL + Const.PATH_IMAGE + data.product.id + ".jpg")
+                .into(binding.imgProduct)
             binding.tvNameProduct.text = data.product.name
+            binding.tvPrice.text = data.product.price.toString() + "vnd"
+            binding.tvQuantity.text = "x" + data.quantity
         }
     }
 

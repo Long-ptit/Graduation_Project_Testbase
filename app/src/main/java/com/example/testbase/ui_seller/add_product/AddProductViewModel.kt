@@ -1,25 +1,18 @@
 package com.example.testbase.ui_seller.add_product
 
 import android.app.Application
-import android.content.Context
 import android.net.Uri
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.testbase.R
-import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.Category
 import com.example.testbase.model.Product
-import com.example.testbase.model.User
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
 import com.example.testbase.network.Api
-import com.example.testbase.util.Const
 import com.example.testbase.util.RealPathUtils
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -33,7 +26,7 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductViewModel @Inject constructor(val api: Api, val application: Application) : BaseViewModel() {
+class AddProductViewModel @Inject constructor(val api: Api,val application: Application) : BaseViewModel() {
 
     val statusAddProduct = MutableLiveData<Product>()
     val statusCategory = MutableLiveData<List<Category>>()

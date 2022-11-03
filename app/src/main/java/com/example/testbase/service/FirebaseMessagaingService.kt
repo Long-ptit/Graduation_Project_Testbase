@@ -21,19 +21,18 @@ class FirebaseMessagaingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        LogUtil.log("234")
-        val notification = message.notification ?: return
-        val strTitle = notification.title
-        val strMessage = notification.body
-        LogUtil.log(strMessage.toString())
+        val dataMap = message.data
+        val strText = dataMap["time"]
+       // val notification = message.notification ?: return
+//        val strTitle = notification.title
+//        val strMessage = notification.body
 
-        NotificationUtil.sendNotification(this, strTitle, strMessage)
+        NotificationUtil.sendNotification(this, "dep trai", strText)
     }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         LogUtil.log(token)
-        FirebaseUtil.saveToken(token)
     }
 
 

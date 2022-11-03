@@ -8,7 +8,8 @@ import com.example.testbase.model.Product
 import com.example.testbase.model.ResponseObject
 import com.example.testbase.network.Api
 import com.example.testbase.util.Const
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
+import com.example.testbase.model_response.ListReviewResponse
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
@@ -23,13 +24,14 @@ class DetailProductViewModel @Inject constructor(val api: Api) : BaseViewModel()
 
     val stateProductById = MutableLiveData<Product>()
     val stateSaveCartItem = MutableLiveData<ResponseObject>()
+    val stateCreateDeeplink = MutableLiveData<String>()
+    val stateRepresentReview = MutableLiveData<ListReviewResponse>()
 
     fun getProductById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
            val product =  api.getProductById(id)
             stateProductById.postValue(product)
         }
-
     }
 
     fun addItemToCart(productId: Int, userId: String, quantity: Int) {
@@ -53,10 +55,18 @@ class DetailProductViewModel @Inject constructor(val api: Api) : BaseViewModel()
             // ...
         }.addOnSuccessListener {
             Log.d("ptit", "createDeeplink: " + it.shortLink.toString())
+            stateCreateDeeplink.postValue(it.shortLink.toString())
 
         }.addOnFailureListener {
             // Error
             // ...
+        }
+    }
+
+    fun getRepresentReviewByProduct(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val listReview =  api.getRepresentReviewByProduct(id)
+            stateRepresentReview.postValue(listReview)
         }
     }
 

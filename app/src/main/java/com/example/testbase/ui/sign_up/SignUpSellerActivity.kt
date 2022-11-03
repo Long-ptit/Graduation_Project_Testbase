@@ -1,11 +1,15 @@
 package com.example.testbase.ui.sign_up
 
 import android.content.Intent
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.ActivitySignUpSeller1Binding
 import com.example.testbase.model.Seller
+import com.example.testbase.ui.login.LoginActivity
 import com.example.testbase.ui.main.MainActivity
 import com.example.testbase.ui.main.MainSellerActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,6 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SignUpSellerActivity : BaseActivity<SignUpViewModel, ActivitySignUpSeller1Binding>() {
 
+    lateinit var mUri: Uri
+    private val pickImage = 100
 
     override fun getContentLayout(): Int {
         return R.layout.activity_sign_up_seller_1
@@ -34,7 +40,11 @@ class SignUpSellerActivity : BaseActivity<SignUpViewModel, ActivitySignUpSeller1
                     binding.edtPassword.text.toString()
                 )
             }
+        }
 
+        binding.img.setOnClickListener {
+            val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+            startActivityForResult(gallery, pickImage)
         }
 
     }
@@ -50,7 +60,7 @@ class SignUpSellerActivity : BaseActivity<SignUpViewModel, ActivitySignUpSeller1
                 sellerPush.id = it
                 sellerPush.shopName = binding.edtShopeName.text.toString()
 
-                saveSellerToDatabase(sellerPush)
+                saveSellerToDatabase(sellerPush, mUri)
             }
 
             stateSaveToDatabase.observe(this@SignUpSellerActivity) {
@@ -63,7 +73,15 @@ class SignUpSellerActivity : BaseActivity<SignUpViewModel, ActivitySignUpSeller1
 
     private fun closeActivity() {
         finishAffinity()
-        val intent = Intent(this@SignUpSellerActivity, MainSellerActivity::class.java)
+        val intent = Intent(this@SignUpSellerActivity, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == pickImage) {
+            mUri = data?.data!!
+            Glide.with(this).load(mUri).into(binding.img)
+        }
     }
 }

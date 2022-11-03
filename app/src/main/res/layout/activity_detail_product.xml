@@ -14,150 +14,183 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_toolbar"
             app:layout_constraintTop_toTopOf="parent"
-            app:tb_title="Chi tiết sản phẩm" />
+            app:tb_title="Chi tiết đánh giá" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/layout_"
-            app:layout_constraintTop_toBottomOf="@id/toolbar">
+            app:layout_constraintTop_toBottomOf="@id/toolbar" >
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/gl_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.25" />
-
-            <ImageView
-                android:id="@+id/img_product"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginVertical="@dimen/dp10"
-                android:scaleType="centerCrop"
-                android:layout_marginHorizontal="@dimen/dp40"
-                android:src="@drawable/ic_logo"
-                app:layout_constraintBottom_toBottomOf="@id/gl_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_marginHorizontal="@dimen/dp10"
-                android:layout_marginVertical="@dimen/dp20"
-                android:id="@+id/layout_detail_product"
-                app:layout_constraintTop_toBottomOf="@id/img_product"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/tv_name_product"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/sp24"
-                    android:textColor="@color/colorBlack"
-                    android:layout_height="wrap_content"
-                    android:text="IPhone 16 Pro Maxxx" />
-
-                <TextView
-                    android:id="@+id/tv_price_product"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@id/tv_name_product"
-                    android:textSize="@dimen/sp16"
-                    android:textColor="#FE3A30"
-                    android:layout_height="wrap_content"
-                    android:text="50.000.000 vnđ" />
-
-
-
-
-            </RelativeLayout>
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/img_logo_shop"
-                android:layout_width="@dimen/dp40"
-                android:layout_height="@dimen/dp40"
-                android:layout_margin="@dimen/dp10"
-                android:src="@drawable/ic_logo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_detail_product"
-                app:shapeAppearanceOverlay="@style/Circle_Image_Product" />
-
-            <TextView
-                android:id="@+id/tv_shope_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp5"
-                android:fontFamily="@font/bevietnampro_bold"
-                android:text="Shop độc"
-                android:textColor="@color/colorBlack"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_logo_shop" />
-
-            <include
-                android:id="@+id/divider"
-                layout="@layout/layout_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginHorizontal="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp10"
-                app:layout_constraintTop_toBottomOf="@id/tv_shope_name" />
-
-            <TextView
-                android:id="@+id/tv_title_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/divider"
-                android:text="Mô tả"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textColor="@color/colorBlack"
-                android:layout_marginStart="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp10" />
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sản phẩm đẹp"
-                android:layout_marginTop="@dimen/dp10"
-                app:layout_constraintStart_toStartOf="@id/tv_title_description"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
-
-            <LinearLayout
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description"
-                android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp15"
-                android:layout_height="wrap_content" >
-
-                <TextView
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
-                    android:text="Thể loại"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/dp40"
+                    android:layout_marginVertical="@dimen/dp10"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_logo"
+                    app:layout_constraintBottom_toBottomOf="@id/gl_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_detail_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp10"
+                    android:layout_marginVertical="@dimen/dp20"
+                    app:layout_constraintTop_toBottomOf="@id/img_product">
+
+                    <TextView
+                        android:id="@+id/tv_name_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IPhone 16 Pro Maxxx"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/sp24" />
+
+                    <TextView
+                        android:id="@+id/tv_price_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name_product"
+                        android:text="50.000.000 vnđ"
+                        android:textColor="#FE3A30"
+                        android:textSize="@dimen/sp16" />
+
+
+                </RelativeLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_logo_shop"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_margin="@dimen/dp10"
+                    android:src="@drawable/ic_logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/colorBlack"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/layout_detail_product"
+                    app:shapeAppearanceOverlay="@style/Circle_Image_Product" />
 
                 <TextView
-                    android:id="@+id/tv_category"
+                    android:id="@+id/tv_shope_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Laptop"
-                    android:textColor="@color/colorApp"
-                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:fontFamily="@font/bevietnampro_bold"
+                    android:text="Shop độc"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_logo_shop" />
+
+                <include
+                    android:id="@+id/divider"
+                    layout="@layout/layout_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginHorizontal="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp10"
+                    app:layout_constraintTop_toBottomOf="@id/tv_shope_name" />
+
+                <TextView
+                    android:id="@+id/tv_title_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="Mô tả"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="Sản phẩm đẹp"
                     app:layout_constraintStart_toStartOf="@id/tv_title_description"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
 
-                <TextView
-                    android:id="@+id/tv_share"
+                <LinearLayout
+                    android:id="@+id/layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chia sẻ cho thầy đi"
-                    android:layout_marginStart="@dimen/dp10" />
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thể loại"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp20"
+                        android:text="Laptop"
+                        android:textColor="@color/colorApp"
+                        app:layout_constraintStart_toStartOf="@id/tv_title_description"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
+
+                    <TextView
+                        android:id="@+id/tv_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp10"
+                        android:text="Chia sẻ cho thầy đi" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="Đánh giá"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout" />
+
+                <TextView
+                    android:id="@+id/btn_see_all_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem tất cả"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:textColor="#03A9F4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_review"
+                    android:layout_marginTop="@dimen/dp5" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp10"
+
+                    app:layout_constraintTop_toBottomOf="@id/tv_review" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/layout_"

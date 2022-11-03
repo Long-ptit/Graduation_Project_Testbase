@@ -20,7 +20,6 @@ object NotificationUtil {
             .setContentText(strMessage)
             .setSmallIcon(R.drawable.ic_logo)
 //            .setContentIntent(pendingIntent)
-        LogUtil.log("thong bao created")
         val notification = builder.build()
         val notiManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notiManager.notify(1, notification)

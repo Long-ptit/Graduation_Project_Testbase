@@ -1,13 +1,8 @@
 package com.example.testbase.ui_common.chat
 
-import android.os.Handler
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import com.example.testbase.R
-import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.ChatMessage
-import com.example.testbase.model.User
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
 import com.example.testbase.network.Api
 import com.example.testbase.util.Const
 import com.example.testbase.util.Util
@@ -16,9 +11,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel

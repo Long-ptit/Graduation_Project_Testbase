@@ -1,18 +1,11 @@
 package com.example.testbase.ui_seller.home
 
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.testbase.R
-import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.Product
-import com.example.testbase.model.User
-import com.example.testbase.view_model.BaseViewModel
+import com.example.testbase.base.BaseViewModel
 import com.example.testbase.network.Api
-import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
