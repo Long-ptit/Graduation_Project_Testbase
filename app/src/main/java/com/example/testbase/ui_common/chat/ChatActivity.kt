@@ -1,6 +1,9 @@
 package com.example.testbase.ui_common.chat
 
+import android.content.Context
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testbase.R
@@ -17,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -38,9 +42,6 @@ class ChatActivity : BaseActivity<ChatViewModel, ActivityChatBinding>() {
 
     override fun initView() {
         idUser = intent.getStringExtra(Const.USER_ID).toString()
-        //idUser = Const.CUSTOMER_ID_2
-
-        Log.d("ptit", "initView:  " + idUser)
         val layoutManager = LinearLayoutManager(
             this@ChatActivity,
             LinearLayoutManager.VERTICAL,
@@ -59,6 +60,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ActivityChatBinding>() {
                     wishlistAdd?.let { listData.add(it) }
                 }
                 mAdapter.setData(listData)
+                binding.rcv.scrollToPosition(listData.size - 1)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -76,6 +78,7 @@ class ChatActivity : BaseActivity<ChatViewModel, ActivityChatBinding>() {
                 text = binding.edtContent.text.toString()
             )
             viewModel.sendMsg(dataChat, idUser)
+            it.hideKeyboard()
         }
     }
 
@@ -83,5 +86,10 @@ class ChatActivity : BaseActivity<ChatViewModel, ActivityChatBinding>() {
         binding.toolbar.getBackButton().setOnClickListener {
             finish()
         }
+    }
+
+    fun View.hideKeyboard() {
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(windowToken, 0)
     }
 }

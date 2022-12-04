@@ -1,10 +1,12 @@
 package com.example.testbase.ui.account
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.testbase.R
 import com.example.testbase.base.BaseFragment
 import com.example.testbase.databinding.FragmentAccountBinding
+import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui_seller.account.AccountViewModel
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
@@ -36,9 +38,9 @@ class AccountFragment : BaseFragment<AccountViewModel, FragmentAccountBinding>()
             viewModel.loggout()
         }
 
-//        binding.btnGoToCart.setOnClickListener {
-//            activity?.startActivity(Intent(context, CartActivity::class.java))
-//        }
+        binding.layoutCart.setOnClickListener {
+            activity?.startActivity(Intent(context, CartActivity::class.java))
+        }
     }
 
     override fun observerLiveData() {

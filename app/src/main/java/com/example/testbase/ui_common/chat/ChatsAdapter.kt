@@ -2,6 +2,7 @@ package com.example.testbase.ui_common.chat
 
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testbase.databinding.ItemChatBinding
@@ -20,8 +21,15 @@ class ChatsAdapter @Inject constructor() : RecyclerView.Adapter<ChatsAdapter.Vie
 
     inner class ViewHolder(val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root) {
         fun fillData(data: ChatMessage, position: Int){
-            binding.tvChat.text = data.text
-            if (Firebase.auth.uid.equals(data.fromID)) binding.tvChat.setTextColor(Color.parseColor("#0aad3f"))
+            if (Firebase.auth.uid.equals(data.fromID)) {
+                binding.tvMyChat.text = data.text
+                binding.layoutOppositeMessage.visibility = View.GONE
+                binding.layoutMyMessage.visibility = View.VISIBLE
+            } else {
+                binding.tvOppositeChat.text = data.text
+                binding.layoutOppositeMessage.visibility = View.VISIBLE
+                binding.layoutMyMessage.visibility = View.GONE
+            }
         }
     }
 

@@ -19,6 +19,7 @@ import com.example.testbase.model.Review
 import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.detail_review.DetailReviewActivity
 import com.example.testbase.ui.rate_dialog.adapter.CommentAdapter
+import com.example.testbase.ui_seller.profile_seller.ProfileSellerActivity
 import com.example.testbase.util.Const
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
@@ -30,7 +31,7 @@ import javax.inject.Inject
 class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetailProductBinding>() {
 
     private var mIdProduct = 0
-
+    private lateinit var mIdSeller: String
     @Inject
     lateinit var mAdapter: CommentAdapter
 
@@ -91,10 +92,21 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
                 this@DetailProductActivity,
                 DetailReviewActivity::class.java
             )
-            Log.d("ptit", "id product: " + mIdProduct)
             intent.putExtra(Const.PRODUCT_ID, mIdProduct)
             startActivity(intent)
         }
+
+        binding.apply {
+            tvShopeName.setOnClickListener {
+                handleClickShopName()
+            }
+        }
+    }
+
+    private fun handleClickShopName() {
+        val intent = Intent(this@DetailProductActivity, ProfileSellerActivity::class.java)
+        intent.putExtra(Const.SELLER_ID, mIdSeller)
+        startActivity(intent)
     }
 
     override fun observerLiveData() {
@@ -123,6 +135,7 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
 
     @SuppressLint("CheckResult")
     private fun showData(it: Product) {
+        mIdSeller = it.seller.id
         binding.tvNameProduct.text = it.name
         binding.tvPriceProduct.text = it.price.toString()
         binding.tvShopeName.text = it.seller.shopName

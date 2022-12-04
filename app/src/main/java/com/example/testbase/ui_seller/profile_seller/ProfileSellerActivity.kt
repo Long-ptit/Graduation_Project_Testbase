@@ -12,20 +12,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
-import com.example.testbase.databinding.ActivityDetailOrderBinding
-import com.example.testbase.databinding.ActivityDetailOrderSellerBinding
-import com.example.testbase.databinding.ActivityDetailProductBinding
-import com.example.testbase.databinding.LayoutBottomAddCartBinding
+import com.example.testbase.databinding.*
 import com.example.testbase.model.Order
 import com.example.testbase.model.OrderItem
 import com.example.testbase.model.Product
+import com.example.testbase.model.Seller
 import com.example.testbase.model_firebase.NotificationSend
 import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
 import com.example.testbase.ui.detail_order.adapter.OrderDetailAdapter
 import com.example.testbase.ui.order.adapter.OrderAdapter
+import com.example.testbase.ui_common.chat.ChatActivity
+import com.example.testbase.ui_seller.profile_seller.adapter.ProductProfileAdapter
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
+import com.example.testbase.util.LogUtil
 import com.example.testbase.util.NotificationUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
@@ -34,15 +35,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileSellerActivity : BaseActivity<ProfileSellerViewModel, ActivityDetailOrderSellerBinding>() {
+class ProfileSellerActivity : BaseActivity<ProfileSellerViewModel, ActivityProfileSellerBinding>() {
 
-    private var mIdOrder = 0
-    private var mOrder: Order = Order()
+
     @Inject
-    lateinit var mAdapter: OrderDetailAdapter
+    lateinit var mAdapter: ProductProfileAdapter
+    private lateinit var idSeller: String
 
     override fun getContentLayout(): Int {
-        return R.layout.activity_detail_order_seller
+        return R.layout.activity_profile_seller
     }
 
     override fun initViewModel() {
@@ -51,76 +52,39 @@ class ProfileSellerActivity : BaseActivity<ProfileSellerViewModel, ActivityDetai
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        val layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        binding.rcv.layoutManager = layoutManager
+        idSeller = intent.getStringExtra(Const.SELLER_ID).toString()
         binding.rcv.adapter = mAdapter
-
-        mIdOrder = intent.getIntExtra(Const.ORDER_ID, 0)
-        viewModel.getOrderById(mIdOrder)
-        viewModel.getOrderItemByOrder(mIdOrder)
+        viewModel.getListProductSeller(idSeller)
+        viewModel.getInforSeller(idSeller)
 
     }
 
     override fun initListener() {
-        binding.toolbar.getBackButton().setOnClickListener {
-            finish()
+        binding.apply {
+            tvChat.setOnClickListener {
+                val intent = Intent(this@ProfileSellerActivity, ChatActivity::class.java)
+                intent.putExtra(Const.USER_ID, idSeller)
+                startActivity(intent)
+                LogUtil.log(idSeller)
+            }
         }
-
-        binding.btnConfirmOrder.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_CONFIRM, mIdOrder, "Đã xác nhận đơn hàng")
-            binding.btnConfirmOrder.visibility = View.GONE
-        }
-
-        binding.btnSendShip.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_SHIPPING, mIdOrder, "Đã được gửi tới đơn vị vận chuyển")
-
-        }
-
-        binding.btnChat.setOnClickListener {
-           // FirebaseUtil.changeStatusOrder(mIdOrder, Const.STATUS_ORDER_PROCESSING)
-        }
-
-        binding.btnCancelOrder.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_CANCEL, mIdOrder, "Đơn hàng của bạn đã bị hủy")
-            binding.btnConfirmOrder.visibility = View.GONE
-            binding.btnSendShip.visibility = View.GONE
-        }
-
-
     }
 
     override fun observerLiveData() {
-
-        viewModel.stateOrderById.observe(this) {
-            mOrder = it.data
-            showData(it.data)
-        }
-
-        viewModel.stateListOrderItem.observe(this) {
-            mAdapter.setData(it.data as ArrayList<OrderItem>)
-        }
-
-        FirebaseUtil.getStatusOrder(mIdOrder) {
-            binding.tvStatus.text = it
+        viewModel.apply {
+            listProductSeller.observe(this@ProfileSellerActivity) {
+                mAdapter.setData(it as ArrayList<Product>)
+            }
+            sellerInfor.observe(this@ProfileSellerActivity) {
+                showData(it.data)
+            }
         }
     }
 
-
-    @SuppressLint("CheckResult", "SetTextI18n")
-    private fun showData(it: Order) {
-        it.apply {
-            binding.tvName.text = shippingInformation.name
-            binding.tvAddress.text = shippingInformation.address
-            binding.tvPhone.text = shippingInformation.phone
-            binding.tvShopName.text = seller.shopName
-            binding.tvPrice.text = totalPrice.toString() + getString(R.string.str_vnd)
-            binding.tvQuantity.text = totalQuantity.toString()
-           // binding.tvStatus.text = status
-        }
+    private fun showData(it: Seller) {
+        binding.tvShopName.text = it.shopName
+        binding.tvAddress.text = it.address
     }
+
 
 }

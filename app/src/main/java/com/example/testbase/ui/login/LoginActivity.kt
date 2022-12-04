@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.LayoutLoginBinding
+import com.example.testbase.model.EStatusOrder
+import com.example.testbase.model.StatusOrder
 import com.example.testbase.model.Seller
 import com.example.testbase.model.User
 import com.example.testbase.ui.main.MainActivity
@@ -13,6 +15,7 @@ import com.example.testbase.ui.main.MainSellerActivity
 import com.example.testbase.ui.sign_up.SignUpCustomerActivity
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
+import com.example.testbase.util.LogUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -33,11 +36,17 @@ class LoginActivity : BaseActivity<LoginViewModel, LayoutLoginBinding>() {
     }
 
     override fun initView() {
+        FirebaseUtil.changeStatusOrderTest(EStatusOrder.CANCEL, 99999) {
+            LogUtil.log("successs")
+        }
 
     }
 
 
     private fun login(email: String, password: String) {
+
+
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

@@ -49,4 +49,11 @@
 
     <string name="str_vnd">VND</string>
 
+
+    <string-array name="sortList" >
+        <item> Không </item>
+        <item> Giá tăng dần </item>
+        <item> Giá giảm dần </item>
+    </string-array>
+
 </resources>

@@ -18,7 +18,7 @@ interface Api {
     fun getUserInfor(@Path("id") id: String): Call<UserResponse>
 
     @GET("api/v1/user/getInforSeller/{id}")
-    fun getInforSeller(@Path("id") id: String): Call<SellerResponse>
+    suspend fun getInforSeller(@Path("id") id: String): SellerResponse
 
     @POST("api/v1/user/saveUser")
     fun saveUser(@Body user: User): Call<BaseResponse>
@@ -32,9 +32,12 @@ interface Api {
             : ResponseObject
 
 
+    //Section Seller
     @POST("api/v1/seller/saveSeller")
     fun saveSeller(@Body seller: Seller): Call<BaseResponse>
 
+
+    //Product
     @Multipart
     @POST("api/v1/product/saveProduct")
     fun saveProduct(
@@ -50,7 +53,7 @@ interface Api {
 
 
     @GET("api/v1/product/getProductBySeller/{id}")
-    fun getListProductBySeller(@Path("id") id: String): Call<List<Product>>
+    suspend fun getListProductBySeller(@Path("id") id: String): List<Product>
 
     ///api/v1/product/getProductById/3
 
@@ -87,6 +90,21 @@ interface Api {
     @GET("api/v1/cart/deleteCartItem")
     suspend fun deleteCartItem(@Query("id") id: Int): BaseResponse
 
+    //order
+    /**
+     * type
+     * 1 -> waiting for confirm
+     * 2 -> prepare product
+     * 3 -> send to shipper
+     * 4 -> cancel
+     */
+
+    @POST("api/v1/order/changeStatus")
+    suspend fun changeStatus(
+        @Query("id_order") id_order: Int,
+        @Query("type_status") type_status: Int,
+    ): OrderResponse
+
     @POST("api/v1/order/createOrder")
     suspend fun createOrder(@Body order: Order): OrderResponse
 
@@ -114,4 +132,9 @@ interface Api {
     @GET("api/v1/review/getAllReviewById/{id}")
     suspend fun getAllReviewById(@Path("id") idProduct: Int): ListReviewResponse
 
+    @GET("api/v1/ship/getDefault/{id}")
+    suspend fun getDefault(@Path("id") idUser: String): ShippingInformation
+
+    @GET("api/v1/ship/getAllShip/{id}")
+    suspend fun getAll(@Path("id") idUser: String): List<ShippingInformation>
 }

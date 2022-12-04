@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.testbase.databinding.LayoutItemProductBinding
 import com.example.testbase.model.Product
 import com.example.testbase.ui.detail_product.DetailProductActivity
@@ -25,6 +26,11 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
 
             Log.d("ptit", "fillData: " + data.id)
             binding.tvNameProduct.text = data.name
+            Glide
+                .with(binding.root.context)
+                .load(Const.BASE_URL + Const.PATH_IMAGE + data.id + ".jpg")
+                .into(binding.imgProduct)
+
             itemView.setOnClickListener {
                 var intent =  Intent(
                     binding.root.context,

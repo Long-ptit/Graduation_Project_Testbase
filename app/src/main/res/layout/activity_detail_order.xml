@@ -167,6 +167,7 @@
             android:textSize="14sp" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_receive_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

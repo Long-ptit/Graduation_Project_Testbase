@@ -21,10 +21,16 @@ import javax.inject.Singleton
 class OrderDetailAdapter @Inject constructor() :
     RecyclerView.Adapter<OrderDetailAdapter.ViewHolder>() {
     var itemClickListener: ((id: Int) -> Unit)? = null
+    var statusOrder = 1
 
     var listOrderItem: ArrayList<OrderItem> = arrayListOf()
     fun setData(listOrderItem: ArrayList<OrderItem>) {
         this.listOrderItem = listOrderItem
+        notifyDataSetChanged()
+    }
+
+    fun setStateReview(status: Int) {
+        statusOrder = status
         notifyDataSetChanged()
     }
 
@@ -40,10 +46,7 @@ class OrderDetailAdapter @Inject constructor() :
             binding.tvNameProduct.text = data.name
             binding.tvPrice.text = data.price.toString() + "vnd"
             binding.tvQuantity.text = "x" + data.quantity
-            FirebaseUtil.getStatusOrder(data.order.id!!) {
-                if (!it.equals(Const.STATUS_ORDER_COMPLETED))
-                    binding.btnReview.visibility = View.GONE
-            }
+            binding.btnReview.visibility = if (statusOrder == 3) View.VISIBLE else View.GONE
             binding.btnReview.setOnClickListener {
                 itemClickListener?.invoke(data.idProduct)
             }

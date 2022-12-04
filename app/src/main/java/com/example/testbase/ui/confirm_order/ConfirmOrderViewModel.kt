@@ -11,6 +11,7 @@ import com.example.testbase.network.Api
 import com.example.testbase.service.ApiFcm
 import com.example.testbase.util.FirebaseUtil
 import com.example.testbase.base.BaseViewModel
+import com.example.testbase.model.ShippingInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +23,13 @@ class ConfirmOrderViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm
     val stateListAllProduct = MutableLiveData<List<CartItem>>()
     val stateCart = MutableLiveData<Cart>()
     val stateCreateOrder = MutableLiveData<OrderResponse>()
+    val stateDefaultShip = MutableLiveData<ShippingInformation>()
+
+    fun getDefaultShip() {
+        viewModelScope.launch(Dispatchers.IO) {
+            stateDefaultShip.postValue(api.getDefault(FirebaseUtil.getUid()))
+        }
+    }
 
     fun getAllCartItemInCart(idUser: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,5 +53,7 @@ class ConfirmOrderViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm
             stateCreateOrder.postValue(data)
         }
     }
+
+
 
 }

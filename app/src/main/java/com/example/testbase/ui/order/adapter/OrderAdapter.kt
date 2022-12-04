@@ -8,6 +8,7 @@ import com.example.testbase.databinding.LayoutItemOrderBinding
 import com.example.testbase.model.CartItem
 import com.example.testbase.model.Order
 import com.example.testbase.ui.cart.adapter.CartProductAdapter
+import com.example.testbase.util.FirebaseUtil
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +31,10 @@ class OrderAdapter @Inject constructor() :
             binding.tvName.text = data.cart.user.name
             binding.tvQuantity.text = data.totalQuantity.toString()
             binding.tvPrice.text = data.totalPrice.toString() + "vnd"
-            binding.tvStatus.text = data.status
+//            binding.tvStatus.text = data.status
+            FirebaseUtil.getStatusOrder(data.id!!) {
+                binding.tvStatus.text = it?.status
+            }
 
             itemView.setOnClickListener {
                 itemClickListener?.invoke(data.id!!)

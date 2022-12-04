@@ -14,6 +14,7 @@ import com.example.testbase.databinding.FragmentAccountSellerBinding
 import com.example.testbase.model.Seller
 import com.example.testbase.ui.login.LoginActivity
 import com.example.testbase.ui.login.LoginViewModel
+import com.example.testbase.ui_seller.statistic.StatisticSellerActivity
 import com.example.testbase.util.FirebaseUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,9 +40,13 @@ class AccountSellerFragment : BaseFragment<AccountViewModel, FragmentAccountSell
 
 
         binding.tvName.setOnClickListener {
-            Log.d("ptit", "click dang xuat: ")
             viewModel.loggout()
             startActivity(Intent(context, LoginActivity::class.java))
+        }
+
+        binding.tvStatistic.setOnClickListener {
+            viewModel.loggout()
+            startActivity(Intent(context, StatisticSellerActivity::class.java))
         }
     }
 

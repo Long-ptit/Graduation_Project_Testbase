@@ -10,5 +10,13 @@ data class Order(
     var cart: Cart = Cart(),
     var shippingInformation: ShippingInformation = ShippingInformation(),
     var seller: Seller = Seller(),
-    var isReviewed: Boolean = false
+    var isSuccess: Boolean = false,
+    /**
+     * type
+     * 1 -> waiting for confirm
+     * 2 -> prepare product
+     * 3 -> send to shipper
+     * 4 -> cancel
+     */
+    var typeStatus: Int = 1
 )

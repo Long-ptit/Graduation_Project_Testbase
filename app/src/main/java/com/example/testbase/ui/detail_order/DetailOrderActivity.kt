@@ -67,12 +67,6 @@ class DetailOrderActivity : BaseActivity<DetailOrderViewModel, ActivityDetailOrd
             finish()
         }
 
-        binding.btnReceiveOrder.setOnClickListener {
-            FirebaseUtil.changeStatusOrder(mIdOrder, Const.STATUS_ORDER_COMPLETED) {
-
-            }
-        }
-
         mAdapter.itemClickListener = {
             val dialog = RatingDialog.newInstance(it)
             dialog.show(supportFragmentManager, null
@@ -84,6 +78,7 @@ class DetailOrderActivity : BaseActivity<DetailOrderViewModel, ActivityDetailOrd
 
         viewModel.stateOrderById.observe(this) {
             showData(it.data)
+            mAdapter.setStateReview(it.data.typeStatus)
         }
 
         viewModel.stateListOrderItem.observe(this) {
@@ -91,7 +86,8 @@ class DetailOrderActivity : BaseActivity<DetailOrderViewModel, ActivityDetailOrd
         }
 
         FirebaseUtil.getStatusOrder(mIdOrder) {
-            binding.tvStatus.text = it
+            binding.tvStatus.text = it?.status
+            viewModel.getOrderById(mIdOrder)
         }
     }
 
@@ -102,10 +98,9 @@ class DetailOrderActivity : BaseActivity<DetailOrderViewModel, ActivityDetailOrd
             binding.tvName.text = shippingInformation.name
             binding.tvAddress.text = shippingInformation.address
             binding.tvPhone.text = shippingInformation.phone
-            binding.tvShopName.text = "Shop tây độc"
+            binding.tvShopName.text = it.seller.shopName
             binding.tvPrice.text = totalPrice.toString() + getString(R.string.str_vnd)
             binding.tvQuantity.text = totalQuantity.toString()
-            // binding.tvStatus.text = status
         }
     }
 

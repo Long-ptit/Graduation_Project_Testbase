@@ -1,5 +1,8 @@
 package com.example.testbase.util
 
+import com.example.testbase.model.EStatusOrder
+import com.example.testbase.model.Seller
+import com.example.testbase.model.StatusOrder
 import com.example.testbase.model.SendNotiFcmRequest
 import com.example.testbase.model_firebase.NotificationSend
 import com.example.testbase.model_response.SendNotifiFcmResponse
@@ -14,7 +17,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 object FirebaseUtil {
     private val mFirebaseAuth = Firebase.auth
@@ -52,15 +54,27 @@ object FirebaseUtil {
 
     }
 
-    fun getStatusOrder(idOrder: Int, callBackSuccess: (status: String) -> Unit) {
+    fun changeStatusOrderTest(enumStatus: EStatusOrder, idOrder: Int, callBackSuccess: () -> Unit) {
+        mDatabase
+            .child(Const.PATH_STATUS_ORDER)
+            .child(idOrder.toString())
+            .setValue(StatusOrder(enumStatus.status, enumStatus.id))
+            .addOnCompleteListener {
+                callBackSuccess.invoke()
+            }
+
+    }
+
+    fun getStatusOrder(idOrder: Int, callBackSuccess: (status: StatusOrder?) -> Unit) {
         mDatabase
             .child(Const.PATH_STATUS_ORDER)
             .child(idOrder.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    LogUtil.log("GET STATUS ORDER")
                     if (snapshot.value == null) return
-                    callBackSuccess.invoke(snapshot.value.toString())
+                    val dataStatusOrder = snapshot.getValue(StatusOrder::class.java)
+                    LogUtil.log("GET STATUS ORDER ${dataStatusOrder}")
+                    callBackSuccess.invoke(dataStatusOrder)
                 }
 
                 override fun onCancelled(error: DatabaseError) {

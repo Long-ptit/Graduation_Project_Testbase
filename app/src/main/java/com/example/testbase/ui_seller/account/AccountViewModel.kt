@@ -2,6 +2,7 @@ package com.example.testbase.ui_seller.account
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.testbase.R
 import com.example.testbase.base.BaseResponse
 import com.example.testbase.model.User
@@ -14,6 +15,7 @@ import com.example.testbase.util.FirebaseUtil
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,17 +43,9 @@ class AccountViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm) : B
     }
 
     fun getSellerInfo(id: String) {
-        api.getInforSeller(id).enqueue(object : Callback<SellerResponse?> {
-            override fun onResponse(call: Call<SellerResponse?>, response: Response<SellerResponse?>) {
-                val user = response.body()?.data
-                stateSeller.postValue(response.body())
-            }
-
-            override fun onFailure(call: Call<SellerResponse?>, t: Throwable) {
-                errorMessage.value = R.string.default_error
-            }
-        })
-
+        viewModelScope.launch {
+            stateSeller.postValue(api.getInforSeller(id))
+        }
     }
 
     fun loggout() {

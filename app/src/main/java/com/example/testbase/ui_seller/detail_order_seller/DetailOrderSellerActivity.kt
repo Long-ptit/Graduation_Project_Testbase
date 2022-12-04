@@ -2,6 +2,7 @@ package com.example.testbase.ui_seller.detail_order_seller
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -16,9 +17,7 @@ import com.example.testbase.databinding.ActivityDetailOrderBinding
 import com.example.testbase.databinding.ActivityDetailOrderSellerBinding
 import com.example.testbase.databinding.ActivityDetailProductBinding
 import com.example.testbase.databinding.LayoutBottomAddCartBinding
-import com.example.testbase.model.Order
-import com.example.testbase.model.OrderItem
-import com.example.testbase.model.Product
+import com.example.testbase.model.*
 import com.example.testbase.model_firebase.NotificationSend
 import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
@@ -26,6 +25,7 @@ import com.example.testbase.ui.detail_order.adapter.OrderDetailAdapter
 import com.example.testbase.ui.order.adapter.OrderAdapter
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
+import com.example.testbase.util.LogUtil
 import com.example.testbase.util.NotificationUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
@@ -34,10 +34,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DetailOrderSellerActivity : BaseActivity<DetailOrderSellerViewModel, ActivityDetailOrderSellerBinding>() {
+class DetailOrderSellerActivity :
+    BaseActivity<DetailOrderSellerViewModel, ActivityDetailOrderSellerBinding>() {
 
     private var mIdOrder = 0
     private var mOrder: Order = Order()
+
     @Inject
     lateinit var mAdapter: OrderDetailAdapter
 
@@ -66,28 +68,36 @@ class DetailOrderSellerActivity : BaseActivity<DetailOrderSellerViewModel, Activ
     }
 
     override fun initListener() {
-        binding.toolbar.getBackButton().setOnClickListener {
-            finish()
-        }
+        binding.apply {
+            toolbar.setOnClickListener { finish() }
 
-        binding.btnConfirmOrder.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_CONFIRM, mIdOrder, "Đã xác nhận đơn hàng")
-            binding.btnConfirmOrder.visibility = View.GONE
-        }
+            btnConfirmOrder.setOnClickListener {
+                viewModel.changeStatusOrder(
+                    EStatusOrder.PREPARE,
+                    mIdOrder,
+                    "Đã xác nhận đơn hàng"
+                )
+            }
 
-        binding.btnSendShip.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_SHIPPING, mIdOrder, "Đã được gửi tới đơn vị vận chuyển")
+            btnSendShip.setOnClickListener {
+                viewModel.changeStatusOrder(
+                    EStatusOrder.COMPLETE,
+                    mIdOrder,
+                    "Đã được gửi tới đơn vị vận chuyển"
+                )
+            }
 
-        }
+            btnCancelOrder.setOnClickListener {
+                viewModel.changeStatusOrder(
+                    EStatusOrder.CANCEL,
+                    mIdOrder,
+                    "Đơn hàng của bạn đã bị hủy"
+                )
+            }
 
-        binding.btnChat.setOnClickListener {
-           // FirebaseUtil.changeStatusOrder(mIdOrder, Const.STATUS_ORDER_PROCESSING)
-        }
+            btnChat.setOnClickListener {
 
-        binding.btnCancelOrder.setOnClickListener {
-            viewModel.changeStatusOrder(Const.STATUS_ORDER_CANCEL, mIdOrder, "Đơn hàng của bạn đã bị hủy")
-            binding.btnConfirmOrder.visibility = View.GONE
-            binding.btnSendShip.visibility = View.GONE
+            }
         }
 
 
@@ -104,8 +114,29 @@ class DetailOrderSellerActivity : BaseActivity<DetailOrderSellerViewModel, Activ
             mAdapter.setData(it.data as ArrayList<OrderItem>)
         }
 
+        viewModel.stateChangeOrder.observe(this) {
+            LogUtil.log(it.msg)
+        }
+
         FirebaseUtil.getStatusOrder(mIdOrder) {
-            binding.tvStatus.text = it
+            binding.tvStatus.text = it?.status
+            handleUIButtonOrder(it!!)
+        }
+    }
+
+    private fun handleUIButtonOrder(it: StatusOrder) {
+        when (it.id) {
+            2 -> goneData(binding.btnConfirmOrder)
+            3 -> goneData(binding.btnConfirmOrder, binding.btnCancelOrder, binding.btnSendShip)
+            4 -> goneData(
+                binding.btnConfirmOrder, binding.btnCancelOrder, binding.btnSendShip
+            )
+        }
+    }
+
+    private fun goneData(vararg views: View) {
+        for (i in views) {
+            i.visibility = View.GONE
         }
     }
 
@@ -119,7 +150,7 @@ class DetailOrderSellerActivity : BaseActivity<DetailOrderSellerViewModel, Activ
             binding.tvShopName.text = seller.shopName
             binding.tvPrice.text = totalPrice.toString() + getString(R.string.str_vnd)
             binding.tvQuantity.text = totalQuantity.toString()
-           // binding.tvStatus.text = status
+            // binding.tvStatus.text = status
         }
     }
 

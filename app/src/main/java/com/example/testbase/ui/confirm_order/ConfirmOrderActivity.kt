@@ -13,6 +13,7 @@ import com.example.testbase.ui.cart.adapter.CartProductAdapter
 import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
 import com.example.testbase.ui.main.MainActivity
 import com.example.testbase.ui.main.MainSellerActivity
+import com.example.testbase.ui.select_address.SelectAddressActivity
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
 import com.example.testbase.util.NotificationUtil
@@ -29,6 +30,7 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
     lateinit var mAdapter: OrderProductAdapter
     var order = Order()
     var seller = Seller()
+    var shippingInformation = ShippingInformation()
 
     override fun getContentLayout(): Int {
        return R.layout.activity_confirm_order
@@ -49,6 +51,7 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
         binding.rcv.adapter = mAdapter
         viewModel.getCart(FirebaseUtil.getUid())
         viewModel.getAllCartItemInCart(FirebaseUtil.getUid())
+        viewModel.getDefaultShip()
     }
 
 
@@ -57,14 +60,20 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
         binding.btnSave.setOnClickListener {
             handleSendItem()
         }
+
+        binding.tvSelectAddress.setOnClickListener {
+            startActivity(Intent(this@ConfirmOrderActivity, SelectAddressActivity::class.java))
+        }
+
+
     }
 
     private fun handleSendItem() {
+        order.status = Const.STATUS_ORDER_CONFIRM
+        order.typeStatus = 1
         order.description = binding.edtDescription.toString()
         order.shippingInformation = ShippingInformation(
-            name = binding.edtName.text.toString(),
-            address = binding.edtAddress.text.toString(),
-            phone = binding.edtPhone.text.toString(),
+            id = shippingInformation.id
         )
         order.description = binding.edtDescription.text.toString()
         order.seller = seller
@@ -76,6 +85,7 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
         viewModel.stateCart.observe(this@ConfirmOrderActivity) {
             binding.tvTotalPrice.text = it.totalPrice.toString() + getString(R.string.str_vnd)
             order.totalPrice = it.totalPrice
+            order.totalQuantity = it.totalQuantity
             order.cart = it
         }
 
@@ -86,8 +96,23 @@ class ConfirmOrderActivity : BaseActivity<ConfirmOrderViewModel, ActivityConfirm
 
         viewModel.stateCreateOrder.observe(this@ConfirmOrderActivity) {
 //            FirebaseUtil.changeStatusOrder(it.data.id!!, Const.STATUS_ORDER_CONFIRM)
+            showErrorStr("Ban da dat hang thanh cong, xem trong phan don hang ban nhe")
+            FirebaseUtil.changeStatusOrderTest(EStatusOrder.CONFIRM, it.data.id!!) {
+
+            }
             startActivity(Intent(this@ConfirmOrderActivity, MainActivity::class.java))
             finishAffinity()
         }
+
+        viewModel.stateDefaultShip.observe(this@ConfirmOrderActivity) {
+            shippingInformation = it
+            showDataDefault(it)
+        }
+    }
+
+    private fun showDataDefault(it: ShippingInformation) {
+        binding.tvName.text = it.name
+        binding.tvPhone.text = it.phone
+        binding.tvAddress.text = it.address
     }
 }
