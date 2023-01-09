@@ -53,7 +53,7 @@ class DetailOrderSellerViewModel @Inject constructor(val api: Api, val apiFcm: A
             stateChangeOrder.postValue(api.changeStatus(idOrder, eStatus.id))
 
             FirebaseUtil.changeStatusOrderTest(eStatus, idOrder) {
-                FirebaseUtil.sendNotification(mOrder.cart.user.id, NotificationSend(strMessage), apiFcm)
+                FirebaseUtil.sendNotification(mOrder.cart.user.id, NotificationSend(strMessage, idOrder, "USER"), apiFcm)
             }
         }
 

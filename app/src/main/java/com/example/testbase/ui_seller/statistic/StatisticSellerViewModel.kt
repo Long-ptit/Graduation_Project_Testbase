@@ -11,6 +11,8 @@ import com.example.testbase.service.ApiFcm
 import com.example.testbase.util.FirebaseUtil
 import com.example.testbase.base.BaseViewModel
 import com.example.testbase.model.EStatusOrder
+import com.example.testbase.model.Statistic
+import com.example.testbase.util.LogUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,44 +22,22 @@ import javax.inject.Inject
 class StatisticSellerViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm) : BaseViewModel() {
 
 
-    val stateOrderById = MutableLiveData<OrderResponse>()
-    var mOrder = Order()
-    val stateListOrderItem = MutableLiveData<ListOrderItemResponse>()
-    val stateChangeOrder = MutableLiveData<OrderResponse>()
+    val stateStatistic = MutableLiveData<Statistic>()
 
+    init {
+        getStatistic()
+    }
 
-    fun getOrderById(id: Int) {
+    private fun getStatistic() {
         viewModelScope.launch(Dispatchers.IO) {
-            val data = api.getOrderById(id)
-            mOrder = data.data
-            stateOrderById.postValue(data)
+            LogUtil.log(FirebaseUtil.getUid())
+            val data = api.getStatistic(FirebaseUtil.getUid())
+            stateStatistic.postValue(data)
         }
 
     }
 
-    fun getOrderItemByOrder(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            stateListOrderItem.postValue(api.getOrderItemByOrder(id))
-        }
 
-    }
-
-    fun changeStatusTypeOrder(id: Int, type: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            stateChangeOrder.postValue(api.changeStatus(id, type))
-        }
-    }
-
-    fun changeStatusOrder(eStatus: EStatusOrder, idOrder: Int, strMessage: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            stateChangeOrder.postValue(api.changeStatus(idOrder, eStatus.id))
-
-            FirebaseUtil.changeStatusOrderTest(eStatus, idOrder) {
-                FirebaseUtil.sendNotification(mOrder.cart.user.id, NotificationSend(strMessage), apiFcm)
-            }
-        }
-
-    }
 
 
 }

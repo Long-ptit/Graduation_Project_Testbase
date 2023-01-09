@@ -26,10 +26,24 @@ import javax.inject.Inject
 class SelectAddressViewmodel @Inject constructor(val api: Api) : BaseViewModel() {
 
     val stateAllShip = MutableLiveData<List<ShippingInformation>>()
-
     fun getAll() {
         viewModelScope.launch(Dispatchers.IO) {
             stateAllShip.postValue(api.getAll(FirebaseUtil.getUid()))
+        }
+    }
+
+    fun saveAddress(ship: ShippingInformation) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            api.saveAddress(ship)
+            getAll()
+        }
+    }
+
+    fun deleteAddress(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            api.deleteAddress(id)
+            getAll()
         }
     }
 

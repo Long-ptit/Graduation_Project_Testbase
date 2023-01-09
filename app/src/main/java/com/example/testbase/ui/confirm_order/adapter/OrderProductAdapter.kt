@@ -2,6 +2,7 @@ package com.example.testbase.ui.confirm_order.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -35,8 +36,10 @@ class OrderProductAdapter @Inject constructor() :
                 .load(Const.BASE_URL + Const.PATH_IMAGE + data.product.id + ".jpg")
                 .into(binding.imgProduct)
             binding.tvNameProduct.text = data.product.name
-            binding.tvPrice.text = data.product.price.toString() + "vnd"
+            binding.tvPrice.text = Util.converCurrency(data.product.getPriceAfterDiscount().toDouble())
             binding.tvQuantity.text = "x" + data.quantity
+            binding.btnReview.visibility = View.GONE
+
         }
     }
 

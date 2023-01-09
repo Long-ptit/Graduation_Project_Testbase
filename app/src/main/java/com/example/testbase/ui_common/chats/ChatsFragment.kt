@@ -9,6 +9,8 @@ import com.example.testbase.base.BaseFragment
 import com.example.testbase.databinding.FragmentChatsBinding
 import com.example.testbase.model.User
 import com.example.testbase.ui_common.chat.ChatActivity
+import com.example.testbase.util.LogUtil
+import com.example.testbase.util.SharePreferenceUtil
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -33,6 +35,7 @@ class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
 
     override fun initViewModel() {
         viewModel = ViewModelProvider(this).get(ChatsViewModel::class.java)
+        LogUtil.log(SharePreferenceUtil.getUserType(requireActivity().applicationContext))
     }
 
     override fun initView() {
@@ -55,9 +58,7 @@ class ChatsFragment : BaseFragment<ChatsViewModel, FragmentChatsBinding>() {
     }
 
     override fun initListener() {
-        binding.tvTitle.setOnClickListener {
-            activity?.startActivity(Intent(activity, ChatActivity::class.java))
-        }
+
 
     }
 

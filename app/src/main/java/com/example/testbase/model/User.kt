@@ -9,7 +9,7 @@ open class User(
     var address: String = "",
     var email: String = "",
     var phone: String = "",
-    var userType: Int = 0,
+    var userType: String = "",
     var path: String = "",
 
     ) : Serializable

@@ -31,7 +31,7 @@ class CartProductAdapter @Inject constructor() :
         fun fillData(data: CartItem, position: Int) {
 
             binding.tvNameProduct.text = data.product.name
-            binding.tvPriceProduct.text = Util.converCurrency(data.product.price.toDouble()) + "VND"
+            binding.tvPriceProduct.text = Util.converCurrency(data.product.getPriceAfterDiscount().toDouble())
             Glide
                 .with(binding.root.context)
                 .load(Const.BASE_URL + Const.PATH_IMAGE + data.product.id + ".jpg")

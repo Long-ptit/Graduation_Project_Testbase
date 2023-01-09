@@ -15,7 +15,7 @@ interface Api {
         get() = "api/v1/user"
 
     @GET("api/v1/user/getInforUser/{id}")
-    fun getUserInfor(@Path("id") id: String): Call<UserResponse>
+    suspend fun getUserInfor(@Path("id") id: String): User
 
     @GET("api/v1/user/getInforSeller/{id}")
     suspend fun getInforSeller(@Path("id") id: String): SellerResponse
@@ -40,16 +40,17 @@ interface Api {
     //Product
     @Multipart
     @POST("api/v1/product/saveProduct")
-    fun saveProduct(
+    suspend fun saveProduct(
         @Part product_img: MultipartBody.Part,
-        @Part("seller_id") seller_id: RequestBody,
-        @Part("product_name") product_name: RequestBody,
-        @Part("product_description") product_description: RequestBody,
-        @Part("product_quantity") product_quantity: RequestBody,
-        @Part("product_price") product_price: RequestBody,
-        @Part("category_id") category_id: RequestBody,
+        @Part("product_id") product_id: RequestBody,
+
+        )        : Product
+
+    @POST("api/v1/product/saveProductWithoutImage")
+    suspend fun saveProductWithoutImage(
+        @Body product: Product,
     )
-            : Call<Product>
+            : Product
 
 
     @GET("api/v1/product/getProductBySeller/{id}")
@@ -63,8 +64,9 @@ interface Api {
     @GET("api/v1/product/getAllProduct")
     suspend fun getAllProduct(): List<Product>
 
-    @GET("api/v1/category/getAllCategory")
-    suspend fun getAllCategory(): List<Category>
+    @POST("api/v1/product/searchProduct")
+    suspend fun searchProduct(@Query("keyword") key: String): List<Product>
+
 
     @GET("api/v1/cart/addItemToCart")
     suspend fun addItemToCart(
@@ -129,12 +131,75 @@ interface Api {
     @GET("api/v1/review/getStatisticReview/{id}")
     suspend fun getStatisticReview(@Path("id") idProduct: Int): StatisReviewResponse
 
+    @GET("api/v1/review/testReview/{id}")
+    suspend fun testReview(@Path("id") idOrderItem: Int): ReviewResponse
+
+
     @GET("api/v1/review/getAllReviewById/{id}")
     suspend fun getAllReviewById(@Path("id") idProduct: Int): ListReviewResponse
+
 
     @GET("api/v1/ship/getDefault/{id}")
     suspend fun getDefault(@Path("id") idUser: String): ShippingInformation
 
+    @GET("api/v1/ship/getById/{id}")
+    suspend fun getById(@Path("id") idShip: Int): ShippingInformation
+
+    @GET("api/v1/ship/deleteAddress/{id}")
+    suspend fun deleteAddress(@Path("id") idShip: Int): ShippingInformation
+
+    @POST("api/v1/ship/saveAddress")
+    suspend fun saveAddress(@Body ship: ShippingInformation): ShippingInformation
+
     @GET("api/v1/ship/getAllShip/{id}")
     suspend fun getAll(@Path("id") idUser: String): List<ShippingInformation>
+
+    //statistic
+
+    @GET("api/v1/statistic/getStatistic/{id}")
+    suspend fun getStatistic(@Path("id") idSeller: String): Statistic
+
+    @GET("api/v1/statistic/getStatisticByTime")
+    suspend fun getStatisticByTime(
+        @Query("id_seller") idSeller: String,
+        @Query("start") start: String,
+        @Query("end") end: String,
+        @Query("sort") sort: Int,
+    ): List<Order>
+
+    //admin api
+
+    @Multipart
+    @POST("api/v1/category/saveCategory")
+    suspend fun saveCategory(
+        @Part category_img: MultipartBody.Part,
+        @Part("category_name") category_name: RequestBody,
+        @Part("category_description") category_description: RequestBody,
+
+        )        : Category
+
+    @Multipart
+    @POST("api/v1/category/editCategory")
+    suspend fun editCategory(
+        @Part category_img: MultipartBody.Part,
+        @Part("category_name") category_name: RequestBody,
+        @Part("category_description") category_description: RequestBody,
+        @Part("category_id") category_id: RequestBody,
+
+        )        : Category
+
+    @GET("api/v1/category/getAllCategory")
+    suspend fun getAllCategory(): List<Category>
+
+    @GET("api/v1/category/getCategory/{id}")
+    suspend fun getCategory(@Path("id") idCategory: Int): Category
+
+    @GET("api/v1/category/deleteCategory/{id}")
+    suspend fun deleteCategory(@Path("id") idCategory: Int): Category
+
+    @GET("api/v1/category/getAllManu")
+    suspend fun getAllManu(): List<Manufacturer>
+
+
+
 }

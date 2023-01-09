@@ -1,7 +1,11 @@
 package com.example.testbase.base
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -19,20 +23,24 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, getContentLayout())
         initViewModel()
-        observerDefaultLiveData()
         loadingDialog = LoadingDialog.newInstance();
+        observerDefaultLiveData()
         initView()
         initListener()
         observerLiveData()
     }
 
     private fun observerDefaultLiveData() {
-        viewModel.isLoading.observe(this@BaseActivity) {
+        viewModel.showSnackBar.observe(this) {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
+        }
+
+
+        viewModel.showLoading.observe(this@BaseActivity) {
             if (it) {
-                if (!loadingDialog.isAdded)
-                    loadingDialog.show(supportFragmentManager, null)
+                showLoading()
             } else {
-                loadingDialog.dismiss()
+                hideLoading()
             }
 
         }
@@ -42,6 +50,17 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
                 showError(it.toInt())
             }
         }
+
+    }
+
+    fun showLoading() {
+//        if (!loadingDialog.isAdded) {
+//            loadingDialog.show(supportFragmentManager, null)
+//        }
+    }
+
+    fun hideLoading() {
+//
 
     }
 
@@ -56,6 +75,15 @@ abstract class BaseActivity<VM: BaseViewModel, BINDING: ViewDataBinding> : AppCo
         var errorSnackbar = Snackbar.make(binding.root, string, Snackbar.LENGTH_LONG)
         errorSnackbar.setAction("", null)
         errorSnackbar.show()
+    }
+
+    fun hideKeyboard() {
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     abstract fun getContentLayout(): Int

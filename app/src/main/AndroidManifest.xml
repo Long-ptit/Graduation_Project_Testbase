@@ -5,20 +5,40 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".base.MyApp"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_new_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute"
         tools:targetApi="31">
+
+        <activity
+            android:name=".ui_admin.edit_category.EditCategoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui_admin.add_category.AddCategoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.main.MainAdminActivity"
+            android:theme="@style/CustomTheme"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:theme="@style/CustomTheme"
+            android:exported="false" />
 
         <activity
             android:name="com.restaurant.exam.ui.detail_statistic.DetailStatisticActivity"
@@ -119,6 +139,9 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

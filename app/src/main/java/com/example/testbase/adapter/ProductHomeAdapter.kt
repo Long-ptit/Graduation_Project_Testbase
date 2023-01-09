@@ -3,6 +3,7 @@ package com.example.testbase.adapter
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,6 +12,7 @@ import com.example.testbase.model.Product
 import com.example.testbase.ui.detail_product.DetailProductActivity
 import com.example.testbase.ui_seller.edit_product.EditProductActivity
 import com.example.testbase.util.Const
+import com.example.testbase.util.Util
 import javax.inject.Inject
 
 class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHomeAdapter.ViewHolder>() {
@@ -26,6 +28,7 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
 
             Log.d("ptit", "fillData: " + data.id)
             binding.tvNameProduct.text = data.name
+            binding.tvSale.visibility = if (data.discount) View.VISIBLE else View.GONE
             Glide
                 .with(binding.root.context)
                 .load(Const.BASE_URL + Const.PATH_IMAGE + data.id + ".jpg")
@@ -39,7 +42,12 @@ class ProductHomeAdapter @Inject constructor() : RecyclerView.Adapter<ProductHom
                 intent.putExtra(Const.PRODUCT_ID, data.id)
                 binding.root.context.startActivity(intent)
             }
-
+            binding.tvPrice.text = Util.converCurrency(data.getPriceAfterDiscount().toDouble())
+            binding.tvSale.text = "Sale Off " + data.discountPoint.toString() + "%"
+            binding.tvPriceOrgin.text =  Util.converCurrency(data.price.toDouble())
+            binding.tvPriceOrgin.visibility = if (data.discount) View.VISIBLE else View.GONE
+            binding.tvSale.visibility = if(data.discount) View.VISIBLE else View.GONE
+            binding.tvSoldNumber.text = "Đã bán " + data.soldNumber.toString()
         }
     }
 

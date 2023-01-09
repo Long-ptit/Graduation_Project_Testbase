@@ -11,10 +11,11 @@
             android:id="@+id/img_item"
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40"
-            app:shapeAppearanceOverlay="@style/Circle_Image"
             android:layout_marginTop="@dimen/dp16"
+            android:scaleType="centerCrop"
             android:layout_marginBottom="@dimen/dp10"
-            android:src="@color/color_3669C9" />
+            android:src="@color/color_3669C9"
+            app:shapeAppearanceOverlay="@style/Circle_Image" />
 
         <LinearLayout
             android:layout_width="match_parent"

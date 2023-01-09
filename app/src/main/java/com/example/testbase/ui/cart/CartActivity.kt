@@ -88,7 +88,7 @@ class CartActivity : BaseActivity<CartViewModel, ActivityCartBinding>() {
 
     @SuppressLint("SetTextI18n")
     private fun showData(cart: Cart) {
-        binding.tvSumPrice.text = Util.converCurrency(cart.totalPrice.toDouble()) + getString(R.string.str_vnd)
+        binding.tvSumPrice.text = Util.converCurrency(cart.totalPrice.toDouble())
         binding.tvSumQuantity.text = cart.totalQuantity.toString() + " Sp"
     }
 }

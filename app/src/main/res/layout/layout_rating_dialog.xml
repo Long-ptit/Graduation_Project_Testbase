@@ -17,7 +17,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="App Rating" />
+                android:text="Let's rating your product" />
 
             <RatingBar
                 android:stepSize="1"
@@ -30,6 +30,7 @@
                 android:id="@+id/edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Enter your message"
                 android:paddingVertical="@dimen/dp20"
                 android:background="@drawable/bg_edt" />
 
@@ -41,6 +42,7 @@
                 <Button
                     android:id="@+id/btn_cancel"
                     android:layout_width="wrap_content"
+                    android:background="@drawable/bg_btn_chat"
                     android:layout_height="wrap_content"
                     android:text="Cancel" />
 
@@ -49,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:background="@drawable/bg_btn_login"
                     android:text="Send rate" />
 
 

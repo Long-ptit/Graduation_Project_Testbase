@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.testbase.R
 import com.example.testbase.databinding.LayoutRatingDialogBinding
+import com.example.testbase.model.OrderItem
 import com.example.testbase.model.Product
 import com.example.testbase.model.Review
 import com.example.testbase.model.User
@@ -52,7 +53,7 @@ class RatingDialog : DialogFragment() {
                     content = binding.edt.text.toString(),
                     createAt = System.currentTimeMillis(),
                     user = User(id = FirebaseUtil.getUid()),
-                    product = Product(id = arguments?.getInt(ARG_ID_PRODUCT)!!)
+                    orderItem = OrderItem(id = arguments?.getInt(ARG_ID_PRODUCT)!!)
                 ))
             }
             dismiss()

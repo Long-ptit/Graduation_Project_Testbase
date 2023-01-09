@@ -1,9 +1,12 @@
 package com.example.testbase.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -14,6 +17,17 @@ abstract class BaseFragment<VM: BaseViewModel, BINDING: ViewDataBinding> : Fragm
 
     lateinit var binding: BINDING
     lateinit var loadingDialog: LoadingDialog;
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.showLoading.observe(this) {
+            if (it) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +55,15 @@ abstract class BaseFragment<VM: BaseViewModel, BINDING: ViewDataBinding> : Fragm
 
     fun hideLoading() {
         loadingDialog.dismiss()
+    }
+
+    fun hideKeyboard() {
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
 

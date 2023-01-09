@@ -19,8 +19,10 @@ import com.example.testbase.model.Review
 import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.detail_review.DetailReviewActivity
 import com.example.testbase.ui.rate_dialog.adapter.CommentAdapter
+import com.example.testbase.ui_common.chat.ChatActivity
 import com.example.testbase.ui_seller.profile_seller.ProfileSellerActivity
 import com.example.testbase.util.Const
+import com.example.testbase.util.Util
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -32,6 +34,7 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
 
     private var mIdProduct = 0
     private lateinit var mIdSeller: String
+
     @Inject
     lateinit var mAdapter: CommentAdapter
 
@@ -68,9 +71,20 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
             finish()
         }
 
+        binding.btnChat.setOnClickListener {
+            val intent = Intent(binding.root.context, ChatActivity::class.java)
+            intent.putExtra(Const.USER_ID, mIdSeller)
+            startActivity(intent)
+        }
+
         binding.btnAddToCart.setOnClickListener {
             val dialog = BottomSheetDialog(this@DetailProductActivity, R.style.DialogCustomTheme)
-            val bindingSheet: LayoutBottomAddCartBinding = DataBindingUtil.inflate(layoutInflater, R.layout.layout_bottom_add_cart, null, false)
+            val bindingSheet: LayoutBottomAddCartBinding = DataBindingUtil.inflate(
+                layoutInflater,
+                R.layout.layout_bottom_add_cart,
+                null,
+                false
+            )
             dialog.setContentView(bindingSheet.root)
             bindingSheet.btnAdd.setOnClickListener {
                 dialog.dismiss()
@@ -88,7 +102,7 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
         }
 
         binding.btnSeeAllReview.setOnClickListener {
-            var intent =  Intent(
+            var intent = Intent(
                 this@DetailProductActivity,
                 DetailReviewActivity::class.java
             )
@@ -115,6 +129,7 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
         }
 
         viewModel.stateSaveCartItem.observe(this@DetailProductActivity) {
+
             startActivity(
                 Intent(this@DetailProductActivity, CartActivity::class.java)
             )
@@ -137,7 +152,7 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
     private fun showData(it: Product) {
         mIdSeller = it.seller.id
         binding.tvNameProduct.text = it.name
-        binding.tvPriceProduct.text = it.price.toString()
+        binding.tvPriceProduct.text = Util.converCurrency(it.getPriceAfterDiscount().toDouble())
         binding.tvShopeName.text = it.seller.shopName
         binding.tvDescription.text = it.description
         binding.tvCategory.text = it.productCategory.name
@@ -145,6 +160,17 @@ class DetailProductActivity : BaseActivity<DetailProductViewModel, ActivityDetai
             .with(this)
             .load(Const.BASE_URL + Const.PATH_IMAGE + mIdProduct + ".jpg")
             .into(binding.imgProduct)
+
+        Glide
+            .with(this)
+            .load(Const.BASE_URL + Const.PATH_IMAGE + it.seller.id + ".jpg")
+            .into(binding.imgLogoShop)
+        binding.tvSpecification.text = it.specification
+        binding.tvYear.text = it.yearPublish
+        binding.tvManu.text = it.manufacturer.name
+        binding.tyInStock.text = it.quantity.toString()
+        binding.tvSoldNumber.text = it.soldNumber.toString()
+        binding.tvNumReview.text = "(" + it.numReview + "đánh giá)"
     }
 
 }

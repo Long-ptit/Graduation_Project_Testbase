@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="18dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp20">
 
 
                 <ImageView
@@ -39,6 +40,14 @@
 
                 <Spinner
                     android:id="@+id/sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:background="@color/transparent"
+                    android:spinnerMode="dialog" />
+
+                <Spinner
+                    android:id="@+id/sp_manu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp24"
@@ -66,6 +75,27 @@
                     android:hint="@string/description" />
 
                 <EditText
+                    android:id="@+id/edt_specification"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="Specification" />
+
+                <EditText
+                    android:id="@+id/edt_year_publish"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="Year publish"
+                    android:inputType="number" />
+
+                <EditText
                     android:id="@+id/edt_quantity"
                     style="@style/Background_Edt"
                     android:layout_width="match_parent"
@@ -84,6 +114,36 @@
                     android:drawableLeft="@drawable/ic_email"
                     android:gravity="center_vertical"
                     android:hint="@string/price" />
+
+                <Switch
+                    android:id="@+id/sw_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:checked="true"
+                    android:text="Discount"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                <EditText
+                    android:id="@+id/edt_discount_point"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="Discount point"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/edt_msg_discount"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="Message Discount" />
 
 
             </LinearLayout>

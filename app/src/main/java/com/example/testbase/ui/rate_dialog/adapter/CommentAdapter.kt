@@ -37,6 +37,11 @@ class CommentAdapter @Inject constructor() :
         fun fillData(data: Review, position: Int) {
             binding.tvContent.text = data.content
             binding.myRatingBar.rating = data.numStars.toFloat()
+            binding.tvDes.text = Util.convertLongToDate(data.createAt)
+            Glide
+                .with(binding.root.context)
+                .load(Const.BASE_URL + Const.PATH_IMAGE + data.user.id + ".jpg")
+                .into(binding.imgItem)
         }
     }
 

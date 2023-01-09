@@ -9,8 +9,10 @@ import com.example.testbase.model.ResponseObject
 import com.example.testbase.network.Api
 import com.example.testbase.util.Const
 import com.example.testbase.base.BaseViewModel
+import com.example.testbase.model.Order
 import com.example.testbase.model_response.ListReviewResponse
 import com.example.testbase.model_response.StatisReviewResponse
+import com.example.testbase.util.FirebaseUtil
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
@@ -23,22 +25,15 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailStatisticViewModel @Inject constructor(val api: Api) : BaseViewModel() {
 
-    val stateStatisReview = MutableLiveData<StatisReviewResponse>()
-    val stateListReviewResponse = MutableLiveData<ListReviewResponse>()
+    val stateListOrderStatistic = MutableLiveData<List<Order>>()
 
-    fun getRepresentReviewByProduct(id: Int) {
+    fun getStatisticByTime(start: String, end: String, sort: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val listReview =  api.getStatisticReview(id)
-            stateStatisReview.postValue(listReview)
+            val listReview =  api.getStatisticByTime(FirebaseUtil.getUid(), start, end, sort)
+            stateListOrderStatistic.postValue(listReview)
         }
     }
 
-    fun getAllReviewById(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val listReview =  api.getAllReviewById(id)
-            stateListReviewResponse.postValue(listReview)
-        }
-    }
 
 
 

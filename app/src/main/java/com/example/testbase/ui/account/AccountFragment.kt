@@ -7,6 +7,7 @@ import com.example.testbase.R
 import com.example.testbase.base.BaseFragment
 import com.example.testbase.databinding.FragmentAccountBinding
 import com.example.testbase.ui.cart.CartActivity
+import com.example.testbase.ui.login.LoginActivity
 import com.example.testbase.ui_seller.account.AccountViewModel
 import com.example.testbase.util.Const
 import com.example.testbase.util.FirebaseUtil
@@ -31,11 +32,9 @@ class AccountFragment : BaseFragment<AccountViewModel, FragmentAccountBinding>()
 
     override fun initListener() {
         binding.btnLoggout.setOnClickListener {
-            LogUtil.log("12345")
-        }
-
-        binding.tvName.setOnClickListener {
             viewModel.loggout()
+            startActivity(Intent(context, LoginActivity::class.java))
+            requireActivity().finishAffinity()
         }
 
         binding.layoutCart.setOnClickListener {
@@ -45,7 +44,7 @@ class AccountFragment : BaseFragment<AccountViewModel, FragmentAccountBinding>()
 
     override fun observerLiveData() {
         viewModel.stateUser.observe(viewLifecycleOwner) {
-            val user = it.data
+          val user = it
             binding.tvName.text = user.name
             Glide
                 .with(binding.root.context)

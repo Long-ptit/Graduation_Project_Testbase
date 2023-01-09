@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/dp15"
+        android:layout_marginVertical="@dimen/dp10"
+        app:cardCornerRadius="@dimen/dp10"
+        app:cardElevation="@dimen/dp4"
+        android:layout_height="wrap_content" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"
+            android:layout_margin="@dimen/dp10">
+
+            <TextView
+                android:id="@+id/tv_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sale Off 30%"
+                android:textColor="#E60C56"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_logo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:text="Iphone 13 pro max"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintTop_toBottomOf="@id/img_product" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_product"
+                android:layout_height="wrap_content" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="30.000.000đ"
+                        android:textColor="@color/color_price_product"
+                        android:textSize="@dimen/sp12"
+                        />
+
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_price_orgin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="30.000.000đ"
+                    android:foreground="@drawable/bg_text"
+                    android:textColor="@color/colorGrayText"
+                    android:textSize="@dimen/sp12"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_sold_number"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="wrap_content"
+                    android:text="Đã bán 50" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

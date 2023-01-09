@@ -23,10 +23,8 @@ import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
 import com.example.testbase.ui.detail_order.adapter.OrderDetailAdapter
 import com.example.testbase.ui.order.adapter.OrderAdapter
-import com.example.testbase.util.Const
-import com.example.testbase.util.FirebaseUtil
-import com.example.testbase.util.LogUtil
-import com.example.testbase.util.NotificationUtil
+import com.example.testbase.ui_common.chat.ChatActivity
+import com.example.testbase.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -96,7 +94,9 @@ class DetailOrderSellerActivity :
             }
 
             btnChat.setOnClickListener {
-
+                val intent = Intent(binding.root.context, ChatActivity::class.java)
+                intent.putExtra(Const.USER_ID, mOrder.cart.user.id)
+                startActivity(intent)
             }
         }
 
@@ -128,9 +128,7 @@ class DetailOrderSellerActivity :
         when (it.id) {
             2 -> goneData(binding.btnConfirmOrder)
             3 -> goneData(binding.btnConfirmOrder, binding.btnCancelOrder, binding.btnSendShip)
-            4 -> goneData(
-                binding.btnConfirmOrder, binding.btnCancelOrder, binding.btnSendShip
-            )
+            4 -> goneData(binding.btnConfirmOrder, binding.btnCancelOrder, binding.btnSendShip)
         }
     }
 
@@ -148,7 +146,7 @@ class DetailOrderSellerActivity :
             binding.tvAddress.text = shippingInformation.address
             binding.tvPhone.text = shippingInformation.phone
             binding.tvShopName.text = seller.shopName
-            binding.tvPrice.text = totalPrice.toString() + getString(R.string.str_vnd)
+            binding.tvPrice.text = Util.converCurrency(totalPrice.toDouble())
             binding.tvQuantity.text = totalQuantity.toString()
             // binding.tvStatus.text = status
         }

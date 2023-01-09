@@ -8,22 +8,39 @@
 
         <LinearLayout
             android:id="@+id/layout_my_message"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="100dp"
+            android:gravity="end"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/tv_my_chat"
-                android:background="@drawable/bg_item_chat"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp20"
-                android:text="This is opponent message" />
+                android:orientation="horizontal"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/tv_my_chat"
+                    android:background="@drawable/bg_item_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp15"
+                    android:text="This is opponent message" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_my_user"
+                    android:layout_width="@dimen/dp32"
+                    android:layout_height="@dimen/dp32"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:src="@color/colorAccent"
+                    app:shapeAppearanceOverlay="@style/Circle_Image" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_my_time"
@@ -39,20 +56,38 @@
 
         <LinearLayout
             android:id="@+id/layout_opposite_message"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginEnd="100dp"
             android:layout_marginStart="20dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/tv_opposite_chat"
-                android:background="@drawable/bg_item_chat_opposite"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp20"
-                android:text="This is opponent message" />
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/img_user"
+                    android:layout_width="@dimen/dp32"
+                    android:layout_height="@dimen/dp32"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorAccent"
+                    app:shapeAppearanceOverlay="@style/Circle_Image" />
+
+                <TextView
+                    android:id="@+id/tv_opposite_chat"
+                    android:background="@drawable/bg_item_chat_opposite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp15"
+                    android:text="This is opponent message" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_opposite_time"

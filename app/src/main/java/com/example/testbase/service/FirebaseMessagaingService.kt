@@ -22,12 +22,16 @@ class FirebaseMessagaingService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         val dataMap = message.data
-        val strText = dataMap["time"]
+        LogUtil.log(dataMap.toString())
+        val strText = dataMap["content"]
+        val idOrder = dataMap["idOrder"]
+        val to = dataMap["to"]
+        LogUtil.log("id order nhan duoc:" + idOrder)
        // val notification = message.notification ?: return
 //        val strTitle = notification.title
 //        val strMessage = notification.body
 
-        NotificationUtil.sendNotification(this, "dep trai", strText)
+        NotificationUtil.sendNotification(this, "Đơn hàng", strText, idOrder!!.toInt(), to!!)
     }
 
     override fun onNewToken(token: String) {

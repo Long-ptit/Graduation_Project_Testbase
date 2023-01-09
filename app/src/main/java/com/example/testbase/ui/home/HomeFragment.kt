@@ -1,6 +1,7 @@
 package com.example.testbase.ui.home
 
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.testbase.R
@@ -10,6 +11,7 @@ import com.example.testbase.model.EStatusOrder
 import com.example.testbase.model.StatusOrder
 import com.example.testbase.model.Product
 import com.example.testbase.ui.home.adapter.ProductUserHomeAdapter
+import com.example.testbase.ui.search.SearchActivity
 import com.example.testbase.util.FirebaseUtil
 import com.example.testbase.util.LogUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,25 +42,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         binding.rcv.layoutManager = layoutManager
         binding.rcv.adapter = mAdapter
         viewModel.getAllProduct()
-       // getFakeData()
-    }
-
-    private fun getFakeData(): MutableList<Product> {
-        val list = mutableListOf<Product>()
-//        list.add(Product("One"))
-//        list.add(Product("Two"))
-//        list.add(Product("Three"))
-//        list.add(Product("Four"))
-//        list.add(Product("Five"))
-        FirebaseUtil.changeStatusOrderTest(EStatusOrder.CANCEL, 55) {
-            LogUtil.log("successs")
-        }
-
-        return list;
     }
 
     override fun initListener() {
-
+        binding.edtSearch.setOnClickListener {
+            activity?.startActivity(Intent(requireContext(),SearchActivity::class.java ))
+        }
     }
 
     override fun observerLiveData() {

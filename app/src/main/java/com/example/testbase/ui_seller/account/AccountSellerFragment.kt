@@ -36,16 +36,11 @@ class AccountSellerFragment : BaseFragment<AccountViewModel, FragmentAccountSell
 
         binding.btnLoggout.setOnClickListener {
             viewModel.loggout()
-        }
-
-
-        binding.tvName.setOnClickListener {
-            viewModel.loggout()
             startActivity(Intent(context, LoginActivity::class.java))
+            requireActivity().finishAffinity()
         }
 
         binding.tvStatistic.setOnClickListener {
-            viewModel.loggout()
             startActivity(Intent(context, StatisticSellerActivity::class.java))
         }
     }

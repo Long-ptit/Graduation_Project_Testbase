@@ -1,11 +1,14 @@
 package com.example.testbase.ui.splash
 
+import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.example.testbase.R
 import com.example.testbase.base.BaseActivity
@@ -14,18 +17,22 @@ import com.example.testbase.ui.detail_product.DetailProductActivity
 import com.example.testbase.ui.login.LoginActivity
 import com.example.testbase.ui.login.LoginViewModel
 import com.example.testbase.ui.main.MainActivity
+import com.example.testbase.ui.main.MainAdminActivity
 import com.example.testbase.ui.main.MainSellerActivity
 import com.example.testbase.util.Const
-import com.example.testbase.util.LogUtil
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import org.apache.poi.hssf.usermodel.HSSFWorkbook
+import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Sheet
+import org.apache.poi.ss.usermodel.Workbook
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 @AndroidEntryPoint
 class SplashActivity : BaseActivity<LoginViewModel, ActivitySplashBinding>() {
@@ -42,11 +49,12 @@ class SplashActivity : BaseActivity<LoginViewModel, ActivitySplashBinding>() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun initView() {
-
         mHandler = Handler(Looper.getMainLooper())
         mHandler.postDelayed({
-            checkUser()
+            // checkUserRole()
+            checkDeeplink()
         }, 1000);
     }
 
@@ -56,28 +64,26 @@ class SplashActivity : BaseActivity<LoginViewModel, ActivitySplashBinding>() {
     }
 
     override fun observerLiveData() {
+        viewModel.stateUserInfor.observe(this) {
+            when (it.userType) {
+                "USER" -> startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                "ADMIN" -> startActivity(Intent(this@SplashActivity, MainAdminActivity::class.java))
+                "SELLER" -> startActivity(
+                    Intent(
+                        this@SplashActivity,
+                        MainSellerActivity::class.java
+                    )
+                )
+            }
+            finishAffinity()
+
+        }
     }
 
     fun checkUser() {
         val currentUSer = auth.currentUser
         if (currentUSer != null) {
-            val listener =  Firebase.database.reference
-                .child(Const.PATH_ACCOUNT)
-                .child(Const.PATH_TYPE)
-                .child(currentUSer.uid)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        LogUtil.log("Co data")
-                        when (snapshot.getValue(String::class.java)) {
-                            Const.USER -> startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                            Const.SELLER -> startActivity(Intent(this@SplashActivity, MainSellerActivity::class.java))
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-                })
+            viewModel.getUserInfor()
         } else {
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
         }
@@ -94,7 +100,10 @@ class SplashActivity : BaseActivity<LoginViewModel, ActivitySplashBinding>() {
 
                     if (deepLink?.getQueryParameter(Const.PRODUCT_ID) != null) {
                         val intent = Intent(this, DetailProductActivity::class.java)
-                        intent.putExtra(Const.PRODUCT_ID, deepLink.getQueryParameter(Const.PRODUCT_ID)!!.toInt())
+                        intent.putExtra(
+                            Const.PRODUCT_ID,
+                            deepLink.getQueryParameter(Const.PRODUCT_ID)!!.toInt()
+                        )
                         startActivity(intent)
                         finish()
                     }

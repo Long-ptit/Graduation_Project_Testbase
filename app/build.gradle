@@ -18,6 +18,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        useLibrary 'org.apache.http.legacy'
     }
 
     buildTypes {
@@ -87,6 +88,8 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.42")
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'org.apache.poi:poi:4.0.0'
+    implementation 'org.apache.poi:poi-ooxml:4.0.0'
 
 
 }

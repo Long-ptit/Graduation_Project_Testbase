@@ -9,6 +9,7 @@ import com.example.testbase.model.CartItem
 import com.example.testbase.model.Order
 import com.example.testbase.ui.cart.adapter.CartProductAdapter
 import com.example.testbase.util.FirebaseUtil
+import com.example.testbase.util.Util
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,7 +31,8 @@ class OrderAdapter @Inject constructor() :
         fun fillData(data: Order, position: Int) {
             binding.tvName.text = data.cart.user.name
             binding.tvQuantity.text = data.totalQuantity.toString()
-            binding.tvPrice.text = data.totalPrice.toString() + "vnd"
+            binding.tvPrice.text = Util.converCurrency(data.totalPrice.toDouble())
+            binding.tvDate.text = Util.convertLongToDate(data.createAt)
 //            binding.tvStatus.text = data.status
             FirebaseUtil.getStatusOrder(data.id!!) {
                 binding.tvStatus.text = it?.status

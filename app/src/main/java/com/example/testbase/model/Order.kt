@@ -10,6 +10,7 @@ data class Order(
     var cart: Cart = Cart(),
     var shippingInformation: ShippingInformation = ShippingInformation(),
     var seller: Seller = Seller(),
+    var paymentType: String = "",
     var isSuccess: Boolean = false,
     /**
      * type

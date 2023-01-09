@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <com.example.testbase.custom_view.ToolbarApp
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:tb_title="Chỉnh sửa thông tin"
+            android:layout_height="@dimen/dp60"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_save"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+
+            <LinearLayout
+                android:id="@+id/layout_edt"
+                android:layout_below="@id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/dp14"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_bg_add_image" />
+
+                <EditText
+                    android:id="@+id/edt_name"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/str_name" />
+
+                <EditText
+                    android:id="@+id/edt_shope_name"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="Tên gian hàng" />
+
+                <EditText
+                    android:id="@+id/edt_age"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/str_age" />
+
+                <EditText
+                    android:id="@+id/edt_address"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/str_address" />
+
+                <EditText
+                    android:id="@+id/edt_phone"
+                    style="@style/Background_Edt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:gravity="center_vertical"
+                    android:hint="@string/str_phone" />
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="51dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_btn_login"
+            android:text="Lưu"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

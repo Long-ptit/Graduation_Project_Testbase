@@ -8,5 +8,5 @@ data class Review(
     var content: String,
     var createAt: Long = 0,
     var user: User,
-    var product: Product
+    var orderItem: OrderItem
 ): Serializable

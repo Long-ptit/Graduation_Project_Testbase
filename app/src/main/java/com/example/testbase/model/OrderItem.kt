@@ -1,10 +1,10 @@
 package com.example.testbase.model
 
 data class OrderItem(
-    var id: Int,
-    var name: String,
-    var price: Long,
-    var quantity: Int,
-    var idProduct: Int,
-    var order: Order,
+    var id: Int = 0,
+    var name: String = "",
+    var price: Long = 0,
+    var quantity: Int = 0,
+    var idProduct: Int = 0,
+    var order: Order = Order(),
 )

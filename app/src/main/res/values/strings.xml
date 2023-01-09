@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestBase</string>
+    <string name="app_name">Laptop, Phone Store</string>
     <string name="default_error">Something has wrong!</string>
     <string name="default_success">Success!</string>
     <string name="api_default_error">Có lỗi xảy ra</string>
@@ -47,10 +47,10 @@
     <string name="chat_ngay">Chat ngay</string>
     <string name="th_m_v_o_gi_h_ng">Thêm vào giỏ hàng</string>
 
-    <string name="str_vnd">VND</string>
+    <string name="str_đ">đ</string>
 
 
-    <string-array name="sortList" >
+    <string-array name="sortList">
         <item> Không </item>
         <item> Giá tăng dần </item>
         <item> Giá giảm dần </item>

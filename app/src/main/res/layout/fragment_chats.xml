@@ -15,6 +15,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/colorApp"
             android:layout_marginTop="@dimen/dp10"
             android:layout_height="wrap_content"
             android:text="Tất cả đoạn chat" />

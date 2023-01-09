@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_toolbar"
             app:layout_constraintTop_toTopOf="parent"
-            app:tb_title="Chi tiết sản phẩm" />
+            app:tb_title="Chi tiết đánh giá" />
 
         <LinearLayout
             android:id="@+id/layout_statistic"
@@ -43,9 +43,9 @@
                         android:id="@+id/number_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5.6"
+                        android:text="4"
                         android:textColor="@color/colorBlack"
-                        android:textSize="@dimen/dp30"
+                        android:textSize="@dimen/sp14"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp10"
                         android:numStars="5"
-                        android:rating="3"
+                        android:rating="5"
                         android:theme="@style/RatingBar"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp10"
                         android:numStars="5"
-                        android:rating="3"
+                        android:rating="4"
                         android:theme="@style/RatingBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -228,7 +228,7 @@
                         android:layout_marginStart="@dimen/dp10"
 
                         android:numStars="5"
-                        android:rating="3"
+                        android:rating="2"
                         android:theme="@style/RatingBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -268,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp10"
                         android:numStars="5"
-                        android:rating="3"
+                        android:rating="1"
                         android:theme="@style/RatingBar"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

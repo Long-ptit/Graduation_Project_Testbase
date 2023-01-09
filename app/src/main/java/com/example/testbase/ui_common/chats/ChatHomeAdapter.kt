@@ -4,12 +4,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.testbase.databinding.ItemChatsBinding
 import com.example.testbase.model.LastestMessage
 import com.example.testbase.model.Seller
 import com.example.testbase.model.User
 import com.example.testbase.ui_common.chat.ChatActivity
 import com.example.testbase.util.Const
+import com.example.testbase.util.LogUtil
 import com.example.testbase.util.Util
 import javax.inject.Inject
 
@@ -24,6 +26,7 @@ class ChatHomeAdapter @Inject constructor() : RecyclerView.Adapter<ChatHomeAdapt
 
     inner class ViewHolder(val binding: ItemChatsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun fillData(data: LastestMessage, position: Int){
+            LogUtil.log("time: " + data.chatMsg.timestamp.toString())
             binding.tvName.text = data.seller.shopName ?: data.seller.name
             binding.tvNewest.text = data.chatMsg.text
             binding.tvTime.text = Util.convertMiliToDate(System.currentTimeMillis() - data.chatMsg.timestamp)
@@ -33,6 +36,11 @@ class ChatHomeAdapter @Inject constructor() : RecyclerView.Adapter<ChatHomeAdapt
                 intent.putExtra(Const.USER_ID, data.seller.id)
                 binding.root.context.startActivity(intent)
             }
+
+            Glide
+                .with(binding.root.context)
+                .load(Const.BASE_URL + Const.PATH_IMAGE + data.seller.id + ".jpg")
+                .into(binding.imgAvatar)
         }
     }
 

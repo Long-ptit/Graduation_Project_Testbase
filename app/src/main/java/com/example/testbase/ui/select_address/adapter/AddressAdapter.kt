@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testbase.databinding.ItemAddressBinding
 import com.example.testbase.model.ShippingInformation
+import com.example.testbase.util.SharePreferenceUtil
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 class AddressAdapter @Inject constructor() :
     RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
 
-    var itemClickListener: ((id: Int,type: TypeClick) -> Unit)? = null
+    var itemClickListener: ((ship: ShippingInformation,type: TypeClick) -> Unit)? = null
 
     var listAddress: ArrayList<ShippingInformation> = arrayListOf()
     fun setData(listAddress: ArrayList<ShippingInformation>) {
@@ -27,13 +28,20 @@ class AddressAdapter @Inject constructor() :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun fillData(data: ShippingInformation, position: Int) {
+            if (binding.equals(SharePreferenceUtil.getAddress(binding.root.context))) binding.cb.isChecked = true
             binding.tvName.text = data.name
             binding.tvAddress.text = data.address
             binding.tvPhone.text = data.phone
             binding.tvDefault.visibility = if(data.isDefault) View.VISIBLE else View.GONE
            binding.cb.isChecked = data.isSelected
-            itemView.setOnClickListener {
-                itemClickListener?.invoke(0, TypeClick.CLICK_ITEM)
+            binding.cb.setOnClickListener {
+                itemClickListener?.invoke(data, TypeClick.CLICK_ITEM)
+            }
+            binding.btnSua.setOnClickListener {
+                itemClickListener?.invoke(data, TypeClick.CLICK_FIX)
+            }
+            binding.btnXoa.setOnClickListener {
+                itemClickListener?.invoke(data, TypeClick.CLICK_DELETE)
             }
         }
     }
@@ -59,7 +67,7 @@ class AddressAdapter @Inject constructor() :
     }
 
     enum class TypeClick {
-        CLICK_ITEM, CLICK_FIX
+        CLICK_ITEM, CLICK_FIX, CLICK_DELETE
     }
 
 }

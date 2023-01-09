@@ -11,6 +11,7 @@ import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.ActivityChatBinding
 import com.example.testbase.model.ChatMessage
 import com.example.testbase.util.Const
+import com.example.testbase.util.LogUtil
 import com.example.testbase.util.Util
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -61,6 +62,8 @@ class ChatActivity : BaseActivity<ChatViewModel, ActivityChatBinding>() {
                 }
                 mAdapter.setData(listData)
                 binding.rcv.scrollToPosition(listData.size - 1)
+                hideKeyboard()
+                binding.edtContent.setText("")
             }
 
             override fun onCancelled(error: DatabaseError) {

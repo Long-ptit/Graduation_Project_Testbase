@@ -3,6 +3,7 @@ package com.example.testbase.ui.detail_review
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -14,6 +15,7 @@ import com.example.testbase.base.BaseActivity
 import com.example.testbase.databinding.ActivityDetailProductBinding
 import com.example.testbase.databinding.ActivityDetailReviewBinding
 import com.example.testbase.databinding.LayoutBottomAddCartBinding
+import com.example.testbase.model.Order
 import com.example.testbase.model.Product
 import com.example.testbase.model.Review
 import com.example.testbase.model_response.StatisReviewResponse
@@ -24,6 +26,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -60,7 +64,10 @@ class DetailReviewActivity : BaseActivity<DetailReviewViewModel, ActivityDetailR
         )
         binding.rcv.layoutManager = layoutManager
         binding.rcv.adapter = mAdapter
+
     }
+
+
 
     override fun initListener() {
         binding.toolbar.getBackButton().setOnClickListener {
@@ -81,7 +88,7 @@ class DetailReviewActivity : BaseActivity<DetailReviewViewModel, ActivityDetailR
     }
 
     private fun showDataStatistic(it: StatisReviewResponse) {
-        binding.tvTotalReview.text = it.data.totalReview.toString() + "Đánh giá"
+        binding.tvTotalReview.text = it.data.totalReview.toString() + " Đánh giá"
         val listData = it.data.listStaReview
 
         binding.tvQuantityReview1.text = listData[0].quantity.toString()
@@ -90,6 +97,24 @@ class DetailReviewActivity : BaseActivity<DetailReviewViewModel, ActivityDetailR
         binding.tvQuantityReview4.text = listData[3].quantity.toString()
         binding.tvQuantityReview5.text = listData[4].quantity.toString()
 
+        val totalReview = it.data.totalReview
+        binding.progressBar1.setProgress((listData[0].quantity*100 / totalReview))
+        binding.progressBar2.setProgress(listData[1].quantity*100 / totalReview)
+        binding.progressBar3.setProgress(listData[2].quantity*100 / totalReview)
+        binding.progressBar4.setProgress(listData[3].quantity*100 / totalReview)
+        binding.progressBar.setProgress(listData[4].quantity*100 / totalReview)
+
+        binding.numberRate.text = roundOffDecimal((it.data.averageRate*5)/10)
+
+
+
+
+    }
+
+    fun roundOffDecimal(number: Double): String {
+        val df = DecimalFormat("#.##")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number).toDouble().toString()
     }
 
 

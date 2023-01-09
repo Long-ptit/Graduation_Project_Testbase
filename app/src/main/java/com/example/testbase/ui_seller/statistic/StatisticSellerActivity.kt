@@ -20,10 +20,7 @@ import com.example.testbase.ui.cart.CartActivity
 import com.example.testbase.ui.confirm_order.adapter.OrderProductAdapter
 import com.example.testbase.ui.detail_order.adapter.OrderDetailAdapter
 import com.example.testbase.ui.order.adapter.OrderAdapter
-import com.example.testbase.util.Const
-import com.example.testbase.util.FirebaseUtil
-import com.example.testbase.util.LogUtil
-import com.example.testbase.util.NotificationUtil
+import com.example.testbase.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -71,7 +68,15 @@ class StatisticSellerActivity :
     }
 
     override fun observerLiveData() {
+        obserDataStatistic()
+    }
 
+    private fun obserDataStatistic() {
+        viewModel.stateStatistic.observe(this@StatisticSellerActivity) {
+            binding.tvMonth.text = "+"+Util.converCurrency(it.totalSumMonth.toDouble())
+            binding.tvWeek.text = "+"+Util.converCurrency(it.totalSumWeek.toDouble())
+            binding.tvToday.text = "+"+Util.converCurrency(it.totalSumToday.toDouble())
+        }
     }
 
 

@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_price"
                     android:layout_toRightOf="@id/tv_title_price"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
                 <TextView
                     android:id="@+id/tv_phone"
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_phone"
                     android:layout_toRightOf="@id/tv_title_phone"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
                 <TextView
                     android:id="@+id/tv_address"
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_address"
                     android:layout_toRightOf="@id/tv_title_address"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
 
                 <TextView

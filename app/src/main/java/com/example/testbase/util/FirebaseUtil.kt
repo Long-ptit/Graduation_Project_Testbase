@@ -41,6 +41,7 @@ object FirebaseUtil {
             .child(Const.PATH_TOKEN_FCM)
             .child(getUid())
             .setValue(null)
+        mFirebaseAuth.signOut()
     }
 
     fun changeStatusOrder(idOrder: Int, status: String, callBackSuccess: () -> Unit) {
@@ -110,5 +111,6 @@ object FirebaseUtil {
             }
         })
     }
+
 
 }

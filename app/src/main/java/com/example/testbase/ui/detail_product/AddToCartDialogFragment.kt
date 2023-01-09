@@ -12,18 +12,9 @@ import com.example.testbase.R
 import com.example.testbase.databinding.FragmentAddToCartDialogListDialogBinding
 import com.example.testbase.databinding.FragmentAddToCartDialogListDialogItemBinding
 
-// TODO: Customize parameter argument names
+
 const val ARG_ITEM_COUNT = "item_count"
 
-/**
- *
- * A fragment that shows a list of items as a modal bottom sheet.
- *
- * You can show this modal bottom sheet from your activity like this:
- * <pre>
- *    AddToCartDialogFragment.newInstance(30).show(supportFragmentManager, "dialog")
- * </pre>
- */
 class AddToCartDialogFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentAddToCartDialogListDialogBinding? = null

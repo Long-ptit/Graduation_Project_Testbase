@@ -44,11 +44,11 @@ class OrderDetailAdapter @Inject constructor() :
                 .load(Const.BASE_URL + Const.PATH_IMAGE + data.idProduct + ".jpg")
                 .into(binding.imgProduct)
             binding.tvNameProduct.text = data.name
-            binding.tvPrice.text = data.price.toString() + "vnd"
+            binding.tvPrice.text = Util.converCurrency(data.price.toDouble())
             binding.tvQuantity.text = "x" + data.quantity
             binding.btnReview.visibility = if (statusOrder == 3) View.VISIBLE else View.GONE
             binding.btnReview.setOnClickListener {
-                itemClickListener?.invoke(data.idProduct)
+                itemClickListener?.invoke(data.id)
             }
         }
     }

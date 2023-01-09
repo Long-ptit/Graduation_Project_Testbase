@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testbase.databinding.ItemStatisticBillBinding
 import com.example.testbase.model.Order
+import com.example.testbase.util.Util
+import javax.inject.Inject
 
-
-class DetailStatisticAdapter() : RecyclerView.Adapter<DetailStatisticAdapter.ViewHolder>() {
+class DetailStatisticAdapter @Inject constructor() : RecyclerView.Adapter<DetailStatisticAdapter.ViewHolder>() {
     var listOrder: ArrayList<Order> = arrayListOf()
 
     fun setData(listOrder: ArrayList<Order>) {
@@ -17,7 +18,11 @@ class DetailStatisticAdapter() : RecyclerView.Adapter<DetailStatisticAdapter.Vie
 
     inner class ViewHolder(val binding: ItemStatisticBillBinding) : RecyclerView.ViewHolder(binding.root) {
         fun fillData(data: Order, position: Int){
-
+            binding.tvQuantity.text = "số lượng mặt hàng: " +  data.totalQuantity.toString()
+            binding.tvSum.text = "Tồng tiền: " + Util.converCurrency(data.totalPrice.toDouble())
+            binding.tvTime.text = "Thời gian tạo: " + Util.convertLongToDate(data.createAt)
+            binding.tvPaymentMethod.text = "Hình thức thanh toán: " + data.paymentType
+            binding.tvId.text = "Mã đơn hàng: " + data.id
         }
     }
 
@@ -36,7 +41,7 @@ class DetailStatisticAdapter() : RecyclerView.Adapter<DetailStatisticAdapter.Vie
     }
 
     override fun getItemCount(): Int {
-        return listOrder!!.size
+        return listOrder.size
     }
 
 }

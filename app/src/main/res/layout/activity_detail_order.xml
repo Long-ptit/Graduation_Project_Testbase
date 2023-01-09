@@ -36,35 +36,56 @@
                     android:id="@+id/tv_title_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giao tới: " />
+                    android:text="Giao tới: "
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tv_title_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title_name"
-                    android:text="Số điện thoại: " />
+                    android:text="Số điện thoại: "
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tv_title_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title_phone"
-                    android:text="Địa chỉ: " />
+                    android:text="Địa chỉ: "
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tv_title_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title_address"
-                    android:text="Tổng số lượng: " />
+                    android:text="Tổng số lượng: "
+                    android:textColor="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/tv_title_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_title_quantity"
-                    android:text="Giá tiền: " />
+                    android:text="Giá tiền: "
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/tv_title_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_title_price"
+                    android:text="Phương thức GH: "
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/tv_payment_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/tv_title_payment"
+                    android:layout_toRightOf="@id/tv_title_payment"
+                    android:text="Thanh toán khi nhận hàng" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -88,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_price"
                     android:layout_toRightOf="@id/tv_title_price"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
                 <TextView
                     android:id="@+id/tv_phone"
@@ -96,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_phone"
                     android:layout_toRightOf="@id/tv_title_phone"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
                 <TextView
                     android:id="@+id/tv_address"
@@ -104,23 +125,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/tv_title_address"
                     android:layout_toRightOf="@id/tv_title_address"
-                    android:text="300000vnd" />
+                    android:text="300000đ" />
 
 
                 <TextView
                     android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đang giao hàng"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:textColor="#ED1F1F"
-                    android:layout_alignParentEnd="true" />
-
-
+                    android:text="Đang giao hàng"
+                    android:textColor="#ED1F1F" />
 
 
             </RelativeLayout>
-
 
 
         </LinearLayout>
@@ -128,16 +146,16 @@
         <LinearLayout
             android:id="@+id/layout_infor_shop"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="@dimen/dp10"
-            app:layout_constraintTop_toBottomOf="@id/layout_edt"
-            android:layout_height="wrap_content" >
+            app:layout_constraintTop_toBottomOf="@id/layout_edt">
 
             <TextView
                 android:id="@+id/tv_shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
-                android:text="Shope name" />
+                android:text="Shope name"
+                android:textColor="@color/colorBlack" />
 
 
         </LinearLayout>
@@ -147,40 +165,51 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/dp20"
+            app:layout_constraintBottom_toTopOf="@id/layout"
             app:layout_constraintTop_toBottomOf="@id/layout_infor_shop"
-            tools:listitem="@layout/layout_item_confirm_order"
-            app:layout_constraintBottom_toTopOf="@id/btn_cancel_order" />
+            tools:listitem="@layout/layout_item_confirm_order" />
 
 
-        <Button
-            android:id="@+id/btn_cancel_order"
+        <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="51dp"
-            android:background="@drawable/bg_btn_alert"
-            android:text="Hủy đơn hàng"
-            android:layout_marginVertical="@dimen/dp20"
-            app:layout_constraintBottom_toTopOf="@id/btn_receive_order"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textFontWeight="700"
-            android:textSize="14sp" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/dp10"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/btn_receive_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="51dp"
-            android:background="@drawable/bg_btn_login"
-            android:text="Đã nhận được hàng"
-            android:layout_marginVertical="@dimen/dp20"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
-            android:textFontWeight="700"
-            android:textSize="14sp" />
+            <Button
+                android:id="@+id/btn_chat_with_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_login"
 
+                android:text="Nhắn tin với người bán"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textFontWeight="700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/btn_cancel_order" />
+
+
+            <Button
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_alert"
+                android:text="Hủy đơn hàng"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textFontWeight="700"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

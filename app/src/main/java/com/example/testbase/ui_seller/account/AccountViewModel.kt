@@ -25,21 +25,13 @@ import javax.inject.Inject
 class AccountViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm) : BaseViewModel() {
     private val auth = Firebase.auth
     val stateLogin = MutableLiveData<String>()
-    val stateUser = MutableLiveData<UserResponse>()
+    val stateUser = MutableLiveData<User>()
     val stateSeller = MutableLiveData<SellerResponse>()
 
     fun getUserInfo(id: String) {
-        api.getUserInfor(id).enqueue(object : Callback<UserResponse?> {
-            override fun onResponse(call: Call<UserResponse?>, response: Response<UserResponse?>) {
-                val user = response.body()?.data
-                stateUser.postValue(response.body())
-            }
-
-            override fun onFailure(call: Call<UserResponse?>, t: Throwable) {
-                errorMessage.value = R.string.default_error
-            }
-        })
-
+        viewModelScope.launch {
+            stateUser.value = api.getUserInfor(id)
+        }
     }
 
     fun getSellerInfo(id: String) {
@@ -50,6 +42,5 @@ class AccountViewModel @Inject constructor(val api: Api, val apiFcm: ApiFcm) : B
 
     fun loggout() {
         FirebaseUtil.deleteToken()
-        auth.signOut()
     }
 }

@@ -28,20 +28,28 @@ class DetailProductViewModel @Inject constructor(val api: Api) : BaseViewModel()
     val stateRepresentReview = MutableLiveData<ListReviewResponse>()
 
     fun getProductById(id: Int) {
+        showLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
            val product =  api.getProductById(id)
             stateProductById.postValue(product)
         }
+        showLoading.postValue(false)
     }
 
     fun addItemToCart(productId: Int, userId: String, quantity: Int) {
         showLoading()
         viewModelScope.launch(Dispatchers.IO) {
-             stateSaveCartItem.postValue(api.addItemToCart(
+
+            val data = api.addItemToCart(
                 product_id = productId,
                 user_id = userId,
                 quantity = quantity
-            ))
+            )
+            if (data.data == null) {
+                showSnackBar.postValue(data.msg)
+            } else {
+                stateSaveCartItem.postValue(data)
+            }
         }
         hideLoading()
     }

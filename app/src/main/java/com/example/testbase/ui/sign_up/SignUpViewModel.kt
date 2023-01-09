@@ -12,6 +12,7 @@ import com.example.testbase.base.BaseViewModel
 import com.example.testbase.model.User
 import com.example.testbase.network.Api
 import com.example.testbase.util.Const
+import com.example.testbase.util.FirebaseUtil
 import com.example.testbase.util.RealPathUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -31,7 +32,8 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(val api: Api,val application: Application) : BaseViewModel() {
+class SignUpViewModel @Inject constructor(val api: Api, val application: Application) :
+    BaseViewModel() {
 
 
     private val auth: FirebaseAuth = Firebase.auth
@@ -66,21 +68,25 @@ class SignUpViewModel @Inject constructor(val api: Api,val application: Applicat
 
         saveImage(uri, user.id)
 
-        database.child(Const.PATH_USER).child(Const.PATH_INFOR).child(user.id).setValue(user).addOnCompleteListener {
-            api.saveUser(user).enqueue(object : Callback<BaseResponse?> {
-                override fun onResponse(call: Call<BaseResponse?>, response: Response<BaseResponse?>) {
-                    errorMessage.value = R.string.default_success
-                    hideLoading()
-                    stateSaveToDatabase.postValue(true)
-                }
+        database.child(Const.PATH_USER).child(Const.PATH_INFOR).child(user.id).setValue(user)
+            .addOnCompleteListener {
+                api.saveUser(user).enqueue(object : Callback<BaseResponse?> {
+                    override fun onResponse(
+                        call: Call<BaseResponse?>,
+                        response: Response<BaseResponse?>
+                    ) {
+                        errorMessage.value = R.string.default_success
+                        hideLoading()
+                        stateSaveToDatabase.postValue(true)
+                    }
 
-                override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
-                    errorMessage.value = R.string.default_error
-                    hideLoading()
-                    stateSaveToDatabase.postValue(false)
-                }
-            })
-        }
+                    override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
+                        errorMessage.value = R.string.default_error
+                        hideLoading()
+                        stateSaveToDatabase.postValue(false)
+                    }
+                })
+            }
     }
 
     fun saveSellerToDatabase(seller: Seller, uri: Uri) {
@@ -93,21 +99,49 @@ class SignUpViewModel @Inject constructor(val api: Api,val application: Applicat
 
         saveImage(uri, seller.id)
 
-        database.child(Const.PATH_USER).child(Const.PATH_INFOR).child(seller.id).setValue(seller).addOnCompleteListener {
-            api.saveSeller(seller).enqueue(object : Callback<BaseResponse?> {
-                override fun onResponse(call: Call<BaseResponse?>, response: Response<BaseResponse?>) {
-                    errorMessage.value = R.string.default_success
-                    hideLoading()
-                    stateSaveToDatabase.postValue(true)
-                }
+        database.child(Const.PATH_USER).child(Const.PATH_INFOR).child(seller.id).setValue(seller)
+            .addOnCompleteListener {
+                api.saveSeller(seller).enqueue(object : Callback<BaseResponse?> {
+                    override fun onResponse(
+                        call: Call<BaseResponse?>,
+                        response: Response<BaseResponse?>
+                    ) {
+                        errorMessage.value = R.string.default_success
+                        hideLoading()
+                        stateSaveToDatabase.postValue(true)
+                    }
 
-                override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
-                    errorMessage.value = R.string.default_error
-                    hideLoading()
-                    stateSaveToDatabase.postValue(false)
-                }
-            })
-        }
+                    override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
+                        errorMessage.value = R.string.default_error
+                        hideLoading()
+                        stateSaveToDatabase.postValue(false)
+                    }
+                })
+            }
+    }
+
+    fun saveInforSeller(seller: Seller, uri: Uri) {
+        database
+            .child(Const.PATH_ACCOUNT)
+            .child(Const.PATH_TYPE)
+            .child(seller.id)
+            .setValue(Const.SELLER)
+
+        saveImage(uri, seller.id)
+
+        api.saveSeller(seller).enqueue(object : Callback<BaseResponse?> {
+            override fun onResponse(call: Call<BaseResponse?>, response: Response<BaseResponse?>) {
+                errorMessage.value = R.string.default_success
+                hideLoading()
+                stateSaveToDatabase.postValue(true)
+            }
+
+            override fun onFailure(call: Call<BaseResponse?>, t: Throwable) {
+                errorMessage.value = R.string.default_error
+                hideLoading()
+                stateSaveToDatabase.postValue(false)
+            }
+        })
     }
 
     private fun saveImage(uri: Uri, id: String) {
@@ -128,6 +162,12 @@ class SignUpViewModel @Inject constructor(val api: Api,val application: Applicat
                 user_img = body,
                 user_id = userId
             )
+        }
+    }
+
+    private fun getSellerInfor() {
+        viewModelScope.launch(Dispatchers.IO) {
+            api.getInforSeller(FirebaseUtil.getUid())
         }
     }
 }
